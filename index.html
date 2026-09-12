@@ -87,7 +87,7 @@
             scroll-behavior: smooth;
         }
 
-        /* 3D Canvas Background на чистом Canvas 2D/3D (без внешних зависимостей) */
+        /* 3D Canvas Background */
         #bg-canvas {
             position: fixed;
             inset: 0;
@@ -1243,47 +1243,46 @@
                     </p>
                 </div>
                 <div class="project-filters">
-                    <button class="filter-btn active" data-filter="all">Все [6]</button>
-                    <button class="filter-btn" data-filter="systems">Systems &amp; C++</button>
-                    <button class="filter-btn" data-filter="backend">Backend &amp; Go</button>
-                    <button class="filter-btn" data-filter="graphics">3D / WebGL</button>
+                    <button class="filter-btn active" data-filter="all">Все [3]</button>
+                    <button class="filter-btn" data-filter="apps">Flutter &amp; Apps</button>
+                    <button class="filter-btn" data-filter="web">Web &amp; UI</button>
                 </div>
             </div>
 
             <div class="projects-grid" id="projects-container">
                 
-                <!-- Проект 1: VoxelEngine 3D -->
-                <div class="flip-container" data-category="systems graphics">
+                <!-- Проект 1: Love Story App -->
+                <div class="flip-container" data-category="apps">
                     <div class="flip-inner">
                         <div class="flip-front">
                             <div>
-                                <span class="project-tag">Low-Level Graphics / C++20</span>
-                                <h3 class="project-title">VoxelEngine 3D</h3>
-                                <p class="project-summary">Высокопроизводительный 3D воксельный движок с процедурной генерацией ландшафта (Octree, Perlin Noise), жадным мешингом и GLSL шейдерами.</p>
+                                <span class="project-tag">Flutter / Personal App</span>
+                                <h3 class="project-title">Love Story App</h3>
+                                <p class="project-summary">Персональное интерактивное приложение для двоих: совместная карта свиданий, памятные даты, фотографии, секретные послания и мини-игры.</p>
                                 <div class="tech-pill-row">
-                                    <span class="pill">C++20</span>
-                                    <span class="pill">OpenGL</span>
-                                    <span class="pill">GLSL</span>
-                                    <span class="pill">SIMD</span>
+                                    <span class="pill">Flutter</span>
+                                    <span class="pill">Dart</span>
+                                    <span class="pill">GoRouter</span>
+                                    <span class="pill">UI/UX</span>
                                 </div>
                             </div>
                             <div class="card-actions">
-                                <span style="font-family: var(--mono); font-size: 0.72rem; color: var(--accent-cyan);">● Release Core</span>
+                                <span style="font-family: var(--mono); font-size: 0.72rem; color: var(--accent-cyan);">● In Active Dev</span>
                                 <button class="btn-inspect btn-flip-trigger">Детали &amp; Скрины &rarr;</button>
                             </div>
                         </div>
                         <div class="flip-back">
                             <div>
-                                <h3 class="project-title" style="margin-bottom: 6px;">VoxelEngine // Metrics</h3>
+                                <h3 class="project-title" style="margin-bottom: 6px;">Love Story // Preview</h3>
                                 <div class="mock-screenshot">
-                                    <span class="mock-text">[ VOXEL_FRAME_BUFFER ]</span>
+                                    <span class="mock-text">[ FLUTTER_APP_MAP ]</span>
                                 </div>
                                 <div class="bench-box" id="bench-log-1">
-                                    > Чанки 512x512: 14.2 ms<br>
-                                    > 120 FPS стабильно<br>
-                                    > RAM: 180MB (Greedy Meshing)
+                                    > Платформы: Android + iOS<br>
+                                    > Архитектура: Clean / Widgets<br>
+                                    > Статус: 60 FPS плавность
                                 </div>
-                                <button class="btn-card-test" data-target-log="bench-log-1" data-bench="Zero memory leaks | 0.8ms draw call time | Octree depth: 8">Запустить Тест Рендера</button>
+                                <button class="btn-card-test" data-target-log="bench-log-1" data-bench="Animations: 60 FPS | Local storage: Hive | Clean navigation">Запустить Тест Модулей</button>
                             </div>
                             <div class="card-actions">
                                 <button class="btn-inspect btn-flip-back" style="width:100%; text-align:center;">&larr; Назад к описанию</button>
@@ -1292,38 +1291,37 @@
                     </div>
                 </div>
 
-                <!-- Проект 2: DistribKV Store -->
-                <div class="flip-container" data-category="backend systems">
+                <!-- Проект 2: LinguaFlow -->
+                <div class="flip-container" data-category="apps">
                     <div class="flip-inner">
                         <div class="flip-front">
                             <div>
-                                <span class="project-tag">Distributed Systems / Go</span>
-                                <h3 class="project-title">DistribKV Store</h3>
-                                <p class="project-summary">Отказоустойчивое ключ-значение хранилище на базе алгоритма консенсуса Raft. Поддержка кворума нод, динамического масштабирования и WAL-лога.</p>
+                                <span class="project-tag">Flutter / Education</span>
+                                <h3 class="project-title">LinguaFlow</h3>
+                                <p class="project-summary">Приложение для изучения лексики и языковой практики. Удобная структура карточек, тренировка памяти и кастомные упражнения.</p>
                                 <div class="tech-pill-row">
-                                    <span class="pill">Go</span>
-                                    <span class="pill">Raft</span>
-                                    <span class="pill">gRPC</span>
-                                    <span class="pill">LevelDB</span>
+                                    <span class="pill">Flutter</span>
+                                    <span class="pill">Dart</span>
+                                    <span class="pill">State Management</span>
                                 </div>
                             </div>
                             <div class="card-actions">
-                                <span style="font-family: var(--mono); font-size: 0.72rem; color: var(--accent-cyan);">● Cluster Active</span>
+                                <span style="font-family: var(--mono); font-size: 0.72rem; color: var(--accent-cyan);">● Education Core</span>
                                 <button class="btn-inspect btn-flip-trigger">Детали &amp; Скрины &rarr;</button>
                             </div>
                         </div>
                         <div class="flip-back">
                             <div>
-                                <h3 class="project-title" style="margin-bottom: 6px;">DistribKV // Cluster</h3>
+                                <h3 class="project-title" style="margin-bottom: 6px;">LinguaFlow // Stats</h3>
                                 <div class="mock-screenshot">
-                                    <span class="mock-text">[ RAFT_CONSENSUS_LOG ]</span>
+                                    <span class="mock-text">[ VOCABULARY_MODULE ]</span>
                                 </div>
                                 <div class="bench-box" id="bench-log-2">
-                                    > RPS: 48,000 req/s<br>
-                                    > Задержка p95: 1.4ms<br>
-                                    > Кворум: 100% согласованность
+                                    > Карточки: динамический список<br>
+                                    > Интерфейс: адаптивный UI<br>
+                                    > Упражнения: интерактив
                                 </div>
-                                <button class="btn-card-test" data-target-log="bench-log-2" data-bench="5 nodes quorum confirmed | Leader election: 140ms | 0 packet loss">Провести Стресс-Тест</button>
+                                <button class="btn-card-test" data-target-log="bench-log-2" data-bench="State sync: OK | Custom painter UI: 60 FPS | Zero lags">Запустить Тест Карточек</button>
                             </div>
                             <div class="card-actions">
                                 <button class="btn-inspect btn-flip-back" style="width:100%; text-align:center;">&larr; Назад к описанию</button>
@@ -1332,154 +1330,37 @@
                     </div>
                 </div>
 
-                <!-- Проект 3: Neural3D Flow -->
-                <div class="flip-container" data-category="graphics">
+                <!-- Проект 3: Landing page for tanya_forest_flowers -->
+                <div class="flip-container" data-category="web">
                     <div class="flip-inner">
                         <div class="flip-front">
                             <div>
-                                <span class="project-tag">Web3D / AI Visualizer</span>
-                                <h3 class="project-title">Neural3D Flow</h3>
-                                <p class="project-summary">Интерактивный 3D-симулятор распространения сигналов и весов в сверточных нейросетях прямо в браузере с вычислениями на шейдерах.</p>
+                                <span class="project-tag">Web / Landing Page</span>
+                                <h3 class="project-title">tanya_forest_flowers</h3>
+                                <p class="project-summary">Стильный посадочный лендинг для цветочного проекта с галереей композиций, адаптивной версткой, каталогом и быстрой формой заказа.</p>
                                 <div class="tech-pill-row">
-                                    <span class="pill">Three.js</span>
-                                    <span class="pill">TypeScript</span>
-                                    <span class="pill">WebGL2</span>
+                                    <span class="pill">HTML5</span>
+                                    <span class="pill">CSS3 / Flexbox</span>
+                                    <span class="pill">JavaScript</span>
                                 </div>
                             </div>
                             <div class="card-actions">
-                                <span style="font-family: var(--mono); font-size: 0.72rem; color: var(--accent-cyan);">● WebGL 2.0</span>
+                                <span style="font-family: var(--mono); font-size: 0.72rem; color: var(--accent-cyan);">● Live Landing</span>
                                 <button class="btn-inspect btn-flip-trigger">Детали &amp; Скрины &rarr;</button>
                             </div>
                         </div>
                         <div class="flip-back">
                             <div>
-                                <h3 class="project-title" style="margin-bottom: 6px;">Neural3D // Visualizer</h3>
+                                <h3 class="project-title" style="margin-bottom: 6px;">TanyaFlowers // UI</h3>
                                 <div class="mock-screenshot">
-                                    <span class="mock-text">[ NEURAL_TOPOLOGY_VIEW ]</span>
+                                    <span class="mock-text">[ FLOWERS_LANDING_PREVIEW ]</span>
                                 </div>
                                 <div class="bench-box" id="bench-log-3">
-                                    > 10,000 активных синапсов<br>
-                                    > Шейдерная интерполяция<br>
-                                    > 60 FPS (Hardware Accel)
+                                    > Адаптивность: 320px - 4K<br>
+                                    > Скорость загрузки: 99/100<br>
+                                    > Анимация каталога и модалок
                                 </div>
-                                <button class="btn-card-test" data-target-log="bench-log-3" data-bench="GPU instancing active | 16.6ms per frame | VR/XR compatible">Запустить Бенчмарк GPU</button>
-                            </div>
-                            <div class="card-actions">
-                                <button class="btn-inspect btn-flip-back" style="width:100%; text-align:center;">&larr; Назад к описанию</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Проект 4: ByteVM & Compiler -->
-                <div class="flip-container" data-category="systems">
-                    <div class="flip-inner">
-                        <div class="flip-front">
-                            <div>
-                                <span class="project-tag">Compilers &amp; Tooling / C++</span>
-                                <h3 class="project-title">ByteVM &amp; Compiler</h3>
-                                <p class="project-summary">Стековая виртуальная машина и транслятор скриптового языка: Lexer, recursive descent parser, AST и генератор опкодов.</p>
-                                <div class="tech-pill-row">
-                                    <span class="pill">C++</span>
-                                    <span class="pill">AST Parser</span>
-                                    <span class="pill">Bytecode</span>
-                                </div>
-                            </div>
-                            <div class="card-actions">
-                                <span style="font-family: var(--mono); font-size: 0.72rem; color: var(--accent-cyan);">● CLI Tool</span>
-                                <button class="btn-inspect btn-flip-trigger">Детали &amp; Скрины &rarr;</button>
-                            </div>
-                        </div>
-                        <div class="flip-back">
-                            <div>
-                                <h3 class="project-title" style="margin-bottom: 6px;">ByteVM // Compiler</h3>
-                                <div class="mock-screenshot">
-                                    <span class="mock-text">[ BYTECODE_HEX_DUMP ]</span>
-                                </div>
-                                <div class="bench-box" id="bench-log-4">
-                                    > Скорость: 1.2 млрд оп/сек<br>
-                                    > Распарсен AST за 0.8ms<br>
-                                    > Рантайм: 42 KB
-                                </div>
-                                <button class="btn-card-test" data-target-log="bench-log-4" data-bench="Zero leaks | AST validation: OK | 100% test coverage">Запустить Компилятор</button>
-                            </div>
-                            <div class="card-actions">
-                                <button class="btn-inspect btn-flip-back" style="width:100%; text-align:center;">&larr; Назад к описанию</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Проект 5: AlgoBench Pathfinder -->
-                <div class="flip-container" data-category="graphics systems">
-                    <div class="flip-inner">
-                        <div class="flip-front">
-                            <div>
-                                <span class="project-tag">Algorithms / WASM</span>
-                                <h3 class="project-title">AlgoBench Pathfinder</h3>
-                                <p class="project-summary">Интерактивная песочница поиска путей и графовых алгоритмов: A*, Dijkstra, лабиринты Краскала и симуляция потоков на WebAssembly.</p>
-                                <div class="tech-pill-row">
-                                    <span class="pill">WASM</span>
-                                    <span class="pill">C++</span>
-                                    <span class="pill">TypeScript</span>
-                                </div>
-                            </div>
-                            <div class="card-actions">
-                                <span style="font-family: var(--mono); font-size: 0.72rem; color: var(--accent-cyan);">● WASM Core</span>
-                                <button class="btn-inspect btn-flip-trigger">Детали &amp; Скрины &rarr;</button>
-                            </div>
-                        </div>
-                        <div class="flip-back">
-                            <div>
-                                <h3 class="project-title" style="margin-bottom: 6px;">Pathfinder // WASM</h3>
-                                <div class="mock-screenshot">
-                                    <span class="mock-text">[ AST_DIJKSTRA_PROFILE ]</span>
-                                </div>
-                                <div class="bench-box" id="bench-log-5">
-                                    > Сетка 100k узлов: 6.2ms (WASM)<br>
-                                    > vs 31.8ms (JS JS engine)<br>
-                                    > Zero-copy буфер
-                                </div>
-                                <button class="btn-card-test" data-target-log="bench-log-5" data-bench="WASM benchmark passed | 5x speedup vs JS | Zero allocation">Запустить WASM тест</button>
-                            </div>
-                            <div class="card-actions">
-                                <button class="btn-inspect btn-flip-back" style="width:100%; text-align:center;">&larr; Назад к описанию</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Проект 6: StreamFlow Queue -->
-                <div class="flip-container" data-category="backend systems">
-                    <div class="flip-inner">
-                        <div class="flip-front">
-                            <div>
-                                <span class="project-tag">Highload Engine / Go</span>
-                                <h3 class="project-title">StreamFlow Queue</h3>
-                                <p class="project-summary">Брокер очередей сообщений в оперативной памяти с кольцевыми lock-free буферами и сохранением на NVMe через zero-copy системные вызовы.</p>
-                                <div class="tech-pill-row">
-                                    <span class="pill">Go</span>
-                                    <span class="pill">Linux epoll</span>
-                                    <span class="pill">Zero-Copy</span>
-                                </div>
-                            </div>
-                            <div class="card-actions">
-                                <span style="font-family: var(--mono); font-size: 0.72rem; color: var(--accent-cyan);">● Production Grade</span>
-                                <button class="btn-inspect btn-flip-trigger">Детали &amp; Скрины &rarr;</button>
-                            </div>
-                        </div>
-                        <div class="flip-back">
-                            <div>
-                                <h3 class="project-title" style="margin-bottom: 6px;">StreamFlow // Highload</h3>
-                                <div class="mock-screenshot">
-                                    <span class="mock-text">[ EPOLL_ZERO_COPY_QUEUE ]</span>
-                                </div>
-                                <div class="bench-box" id="bench-log-6">
-                                    > Throughput: 1.15M msg/sec<br>
-                                    > Задержка p99 < 0.35ms<br>
-                                    > Lock-free ring buffer
-                                </div>
-                                <button class="btn-card-test" data-target-log="bench-log-6" data-bench="1.15M msg/sec verified | GC overhead < 0.1% | NVMe sync OK">Запустить Highload тест</button>
+                                <button class="btn-card-test" data-target-log="bench-log-3" data-bench="Lighthouse Performance: 99 | Mobile friendly: 100% | Flexbox layout">Проверить Верстку</button>
                             </div>
                             <div class="card-actions">
                                 <button class="btn-inspect btn-flip-back" style="width:100%; text-align:center;">&larr; Назад к описанию</button>
@@ -1531,11 +1412,11 @@
                 <div class="skill-node" data-skill="C++20">C++20 / STL / OOP</div>
                 <div class="skill-node" data-skill="Flutter / Dart">Flutter / Dart</div>
                 <div class="skill-node" data-skill="Algorithms">Algorithms &amp; Data Structures</div>
-                <div class="skill-node" data-skill="WebGL">WebGL / OpenGL / GLSL</div>
-                <div class="skill-node" data-skill="TypeScript">TypeScript / Modern JS</div>
-                <div class="skill-node" data-skill="Go">Go / Concurrency</div>
-                <div class="skill-node" data-skill="Docker">Docker / Linux Internals</div>
+                <div class="skill-node" data-skill="HTML / CSS / JS">HTML / CSS / JavaScript</div>
                 <div class="skill-node" data-skill="Git / GitHub">Git / GitHub</div>
+                <div class="skill-node" data-skill="Figma / UI UX">Figma / UI / UX</div>
+                <div class="skill-node" data-skill="AutoCAD / Inventor">AutoCAD / Inventor</div>
+                <div class="skill-node" data-skill="Linux / Terminal">Linux / Terminal</div>
             </div>
         </section>
     </div>
@@ -1564,9 +1445,7 @@
     <script>
         (function() {
             function startApp() {
-                /* ----------------------------------------------------
-                   1. Звуковой синтезатор (Web Audio API) + Haptic
-                ---------------------------------------------------- */
+                /* 1. Звук */
                 let soundEnabled = false;
                 let audioCtx = null;
 
@@ -1611,7 +1490,6 @@
                     triggerHaptic(ms);
                 }
 
-                // Кнопка звука
                 const soundBtn = document.getElementById('sound-toggle');
                 if (soundBtn) {
                     soundBtn.onclick = function(e) {
@@ -1625,9 +1503,7 @@
                     };
                 }
 
-                /* ----------------------------------------------------
-                   2. Переключатель тем (4 темы + localStorage)
-                ---------------------------------------------------- */
+                /* 2. Темы */
                 const themes = ['emerald', 'cyan', 'purple', 'amber'];
                 const themeTitles = ['Тема: Изумруд', 'Тема: Циан', 'Тема: Пурпур', 'Тема: Янтарь'];
                 let currentThemeIndex = 0;
@@ -1655,9 +1531,7 @@
                     };
                 }
 
-                /* ----------------------------------------------------
-                   3. Плавный скролл навигации
-                ---------------------------------------------------- */
+                /* 3. Скролл */
                 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                     anchor.onclick = function(e) {
                         const targetId = this.getAttribute('href');
@@ -1671,9 +1545,7 @@
                     };
                 });
 
-                /* ----------------------------------------------------
-                   4. Вкладки "Обо мне"
-                ---------------------------------------------------- */
+                /* 4. Вкладки */
                 const atabBtns = document.querySelectorAll('.atab-btn');
                 const atabContents = document.querySelectorAll('.atab-content');
 
@@ -1692,9 +1564,7 @@
                     };
                 });
 
-                /* ----------------------------------------------------
-                   5. Терминал (история, автодополнение, команды)
-                ---------------------------------------------------- */
+                /* 5. Терминал */
                 const termInput = document.getElementById('term-cmd');
                 const termLog = document.getElementById('term-log');
                 const commandHistory = [];
@@ -1703,8 +1573,8 @@
                 const cmdMap = {
                     'help': 'Команды: about, projects, skills, matrix, status, lab, theme, clear',
                     'about': 'Максим — студент БГУИР (ФКСиС, ИиТП). Фокус: C++, Flutter/Dart, Web.',
-                    'projects': 'Переверните 3D-карточку любого проекта для метрик и скринов.',
-                    'skills': 'C++20, Flutter/Dart, Algorithms, WebGL, Go, Docker, Git.',
+                    'projects': 'Проекты: Love Story, LinguaFlow, tanya_forest_flowers.',
+                    'skills': 'C++20, Flutter/Dart, Algorithms, HTML/CSS/JS, Git, Figma.',
                     'matrix': 'Неоновый протокол активен. Сеть функционирует стабильно.',
                     'status': 'ONLINE | BSUIR CSaN // IaTP // 2026 | BUILD: OK',
                     'lab': 'Лаборатория физики узлов активна ниже.',
@@ -1775,9 +1645,7 @@
                     };
                 });
 
-                /* ----------------------------------------------------
-                   6. 3D Переворот карточек (FLIP) & Фильтры
-                ---------------------------------------------------- */
+                /* 6. Карточки (Flip) */
                 const flipTriggers = document.querySelectorAll('.btn-flip-trigger');
                 const flipBacks = document.querySelectorAll('.btn-flip-back');
                 const filterBtns = document.querySelectorAll('.filter-btn');
@@ -1803,7 +1671,6 @@
                     };
                 });
 
-                // Кнопки локального тестирования внутри задней стороны карточки
                 document.querySelectorAll('.btn-card-test').forEach(btn => {
                     btn.onclick = function(e) {
                         e.preventDefault();
@@ -1818,7 +1685,6 @@
                     };
                 });
 
-                // Фильтры
                 filterBtns.forEach(btn => {
                     btn.onclick = function(e) {
                         e.preventDefault();
@@ -1829,7 +1695,7 @@
 
                         const filter = this.getAttribute('data-filter');
                         projectCards.forEach(card => {
-                            card.classList.remove('flipped'); // сброс переворота
+                            card.classList.remove('flipped');
                             const cat = card.getAttribute('data-category') || '';
                             if (filter === 'all' || cat.includes(filter)) {
                                 card.style.display = 'flex';
@@ -1840,7 +1706,6 @@
                     };
                 });
 
-                // Кнопки Hero действий
                 const btnRandomFlip = document.getElementById('btn-random-flip');
                 if (btnRandomFlip) {
                     btnRandomFlip.onclick = function(e) {
@@ -1878,9 +1743,7 @@
                     };
                 }
 
-                /* ----------------------------------------------------
-                   7. Интерактивная Лаборатория Узлов (С отталкиванием от курсора)
-                ---------------------------------------------------- */
+                /* 7. Лаборатория узлов с магнитным отталкиванием */
                 const labCanvas = document.getElementById('lab-canvas');
                 const countSpan = document.getElementById('lab-node-count');
                 const nodeModal = document.getElementById('node-modal-overlay');
@@ -1964,7 +1827,6 @@
                         update() {
                             if (labPaused) return;
 
-                            // Плавное ограничение и затухание скорости после импульса
                             this.vx *= 0.985;
                             this.vy *= 0.985;
 
@@ -1982,7 +1844,6 @@
                             this.x += this.vx; 
                             this.y += this.vy;
 
-                            // Отскок от границ холста
                             if (this.x <= this.radius) { this.x = this.radius; this.vx = Math.abs(this.vx); }
                             if (this.x >= labCanvas.width - this.radius) { this.x = labCanvas.width - this.radius; this.vx = -Math.abs(this.vx); }
                             if (this.y <= this.radius) { this.y = this.radius; this.vy = Math.abs(this.vy); }
@@ -2038,15 +1899,8 @@
                         pointer.active = true;
                     }
 
-                    // Обработка мыши на ПК: отталкивание работает ПРИ ПРОСТОМ НАВЕДЕНИИ
-                    labCanvas.onmousemove = function(e) {
-                        updatePtr(e);
-                    };
-
-                    labCanvas.onmouseenter = function(e) {
-                        updatePtr(e);
-                    };
-
+                    labCanvas.onmousemove = function(e) { updatePtr(e); };
+                    labCanvas.onmouseenter = function(e) { updatePtr(e); };
                     labCanvas.onmouseleave = function() {
                         pointer.active = false;
                         pointer.x = -1000;
@@ -2066,9 +1920,8 @@
                         }
                     };
 
-                    // Обработка касания на смартфонах
                     labCanvas.ontouchstart = function(e) {
-                        e.preventDefault(); // скролл страницы на холсте отключен
+                        e.preventDefault();
                         getAudio();
                         updatePtr(e);
                         const clicked = findNodeAt(pointer.x, pointer.y);
@@ -2081,22 +1934,14 @@
                         }
                     };
 
-                    labCanvas.ontouchmove = function(e) {
-                        e.preventDefault();
-                        updatePtr(e);
-                    };
-
+                    labCanvas.ontouchmove = function(e) { e.preventDefault(); updatePtr(e); };
                     labCanvas.ontouchend = function() {
                         pointer.active = false;
                         pointer.x = -1000;
                         pointer.y = -1000;
                     };
+                    labCanvas.ontouchcancel = function() { pointer.active = false; };
 
-                    labCanvas.ontouchcancel = function() {
-                        pointer.active = false;
-                    };
-
-                    // Кнопки управления лабораторией
                     const btnAddNodes = document.getElementById('btn-add-nodes');
                     if (btnAddNodes) {
                         btnAddNodes.onclick = function(e) {
@@ -2146,7 +1991,6 @@
                         requestAnimationFrame(renderLab);
                         ctx.clearRect(0, 0, labCanvas.width, labCanvas.height);
 
-                        // Соединительные линии
                         const maxD = isMobile ? 70 : 100;
                         for (let i = 0; i < nodes.length; i++) {
                             for (let j = i + 1; j < nodes.length; j++) {
@@ -2165,7 +2009,6 @@
                             }
                         }
 
-                        // Физика магнитного отталкивания от курсора / пальца
                         const repRadius = isMobile ? 65 : 100;
                         nodes.forEach(n => {
                             n.update();
@@ -2176,12 +2019,8 @@
                                 if (dist < repRadius && dist > 0) {
                                     const force = (repRadius - dist) / repRadius;
                                     const push = force * (isMobile ? 3.5 : 5.0);
-                                    
-                                    // Сдвиг позиции
                                     n.x += (dx / dist) * push;
                                     n.y += (dy / dist) * push;
-
-                                    // Дополнительный импульс скорости
                                     n.vx += (dx / dist) * force * 0.45;
                                     n.vy += (dy / dist) * force * 0.45;
                                 }
@@ -2192,9 +2031,7 @@
                     renderLab();
                 }
 
-                /* ----------------------------------------------------
-                   8. Автономный 3D-фон (Canvas 2D/3D particles)
-                ---------------------------------------------------- */
+                /* 8. Фон */
                 const bgCanvas = document.getElementById('bg-canvas');
                 if (bgCanvas) {
                     const ctx3d = bgCanvas.getContext('2d');
@@ -2286,9 +2123,7 @@
                     });
                 }
 
-                /* ----------------------------------------------------
-                   9. Кнопки стека (Skills)
-                ---------------------------------------------------- */
+                /* 9. Навыки */
                 document.querySelectorAll('.skill-node').forEach(node => {
                     node.onclick = function() {
                         getAudio();
@@ -2304,7 +2139,6 @@
                     };
                 });
 
-                // Escape закрывает модалку узла
                 document.addEventListener('keydown', (e) => {
                     if (e.key === 'Escape') closeNodeModal();
                 });
