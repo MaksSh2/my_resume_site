@@ -11,7 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
-        /* CSS Переменные тем оформления */
+        /* CSS */
         :root, html[data-theme="emerald"] {
             --bg: #05070d;
             --card-bg: rgba(13, 19, 33, 0.94);
@@ -66,7 +66,7 @@
             --text-muted: #d6b98a;
         }
 
-        /* Глобальный сброс и защита от смещения текста */
+        /* сброс */
         *, *::before, *::after {
             box-sizing: border-box;
             margin: 0;
@@ -87,7 +87,7 @@
             scroll-behavior: smooth;
         }
 
-        /* 3D Canvas Background на чистом Canvas 2D/3D (без внешних зависимостей) */
+        /* Background */
         #bg-canvas {
             position: fixed;
             inset: 0;
@@ -109,7 +109,7 @@
             z-index: 1;
         }
 
-        /* Главный контейнер */
+        /* контейнер */
         .container {
             width: 100%;
             max-width: 1180px;
@@ -119,7 +119,7 @@
             z-index: 2;
         }
 
-        /* Шапка сайта */
+        /* Шапка */
         header {
             display: flex;
             justify-content: space-between;
@@ -200,7 +200,7 @@
             background: rgba(var(--accent-rgb), 0.15);
         }
 
-        /* Главный экран (Hero) */
+        /* Главный экран */
         .hero {
             display: grid;
             grid-template-columns: 1fr;
@@ -415,7 +415,7 @@
         }
         .terminal-error { color: #f87171; }
 
-        /* Секции общие */
+        /* общие */
         .section-header {
             margin-bottom: 18px;
             display: flex;
@@ -444,7 +444,7 @@
             font-size: 0.95rem;
         }
 
-        /* Секция: Обо мне */
+        /* Обо мне */
         .about-section {
             margin-bottom: 50px;
         }
@@ -606,7 +606,7 @@
             font-weight: 500;
         }
 
-        /* Проекты с 3D ПЕРЕВОРОТОМ (FLIP CARDS) */
+        /* Проекты */
         .projects-section {
             margin-bottom: 50px;
         }
@@ -657,7 +657,7 @@
             }
         }
 
-        /* Контейнер 3D переворота */
+        /* Контейнер переворота */
         .flip-container {
             background-color: transparent;
             min-height: 410px;
@@ -777,7 +777,7 @@
             color: #05070d;
         }
 
-        /* Задняя сторона карточки: скриншот и лог */
+        /* Задняя сторона карточки */
         .mock-screenshot {
             width: 100%;
             height: 110px;
@@ -901,7 +901,7 @@
             border-radius: 10px;
             display: block;
             cursor: crosshair;
-            touch-action: none; /* Запрещает странице скроллиться при касании холста */
+            touch-action: none; 
         }
 
         .lab-instructions {
@@ -1519,13 +1519,11 @@
         </div>
     </div>
 
-    <!-- Чистый, надежный и оптимизированный JS -->
+    <!-- JS -->
     <script>
         (function() {
             function startApp() {
-                /* ----------------------------------------------------
-                   1. Звуковой синтезатор (Web Audio API) + Haptic
-                ---------------------------------------------------- */
+                /* 1. Звук */
                 let soundEnabled = false;
                 let audioCtx = null;
 
@@ -1584,9 +1582,7 @@
                     };
                 }
 
-                /* ----------------------------------------------------
-                   2. Переключатель тем (4 темы + localStorage)
-                ---------------------------------------------------- */
+                /* 2. Переключатель тем (4 темы + localStorage) */
                 const themes = ['emerald', 'cyan', 'purple', 'amber'];
                 const themeTitles = ['Тема: Изумруд', 'Тема: Циан', 'Тема: Пурпур', 'Тема: Янтарь'];
                 let currentThemeIndex = 0;
@@ -1614,9 +1610,7 @@
                     };
                 }
 
-                /* ----------------------------------------------------
-                   3. Плавный скролл навигации
-                ---------------------------------------------------- */
+                /* 3. Плавный скролл навигации */
                 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                     anchor.onclick = function(e) {
                         const targetId = this.getAttribute('href');
@@ -1630,9 +1624,7 @@
                     };
                 });
 
-                /* ----------------------------------------------------
-                   4. Вкладки "Обо мне"
-                ---------------------------------------------------- */
+                /*  4. Обо мне */
                 const atabBtns = document.querySelectorAll('.atab-btn');
                 const atabContents = document.querySelectorAll('.atab-content');
 
@@ -1651,9 +1643,7 @@
                     };
                 });
 
-                /* ----------------------------------------------------
-                   5. Терминал (история, автодополнение, команды)
-                ---------------------------------------------------- */
+                /* 5. Терминал */
                 const termInput = document.getElementById('term-cmd');
                 const termLog = document.getElementById('term-log');
                 const commandHistory = [];
@@ -1734,9 +1724,7 @@
                     };
                 });
 
-                /* ----------------------------------------------------
-                   6. 3D Переворот карточек (FLIP) & Фильтры
-                ---------------------------------------------------- */
+                /* 6. Переворот карточек */
                 const flipTriggers = document.querySelectorAll('.btn-flip-trigger');
                 const flipBacks = document.querySelectorAll('.btn-flip-back');
                 const filterBtns = document.querySelectorAll('.filter-btn');
@@ -1799,7 +1787,7 @@
                     };
                 });
 
-                // Кнопки Hero действий
+                // Кнопки действий
                 const btnRandomFlip = document.getElementById('btn-random-flip');
                 if (btnRandomFlip) {
                     btnRandomFlip.onclick = function(e) {
@@ -1837,9 +1825,7 @@
                     };
                 }
 
-                /* ----------------------------------------------------
-                   7. Интерактивная Лаборатория Узлов (С отталкиванием от курсора)
-                ---------------------------------------------------- */
+                /* 7. Интерактивная Лаборатория Узлов */
                 const labCanvas = document.getElementById('lab-canvas');
                 const countSpan = document.getElementById('lab-node-count');
                 const nodeModal = document.getElementById('node-modal-overlay');
@@ -1924,8 +1910,8 @@
                             if (labPaused) return;
 
                             // Плавное ограничение и затухание скорости после импульса
-                            this.vx *= 0.985;
-                            this.vy *= 0.985;
+                            this.vx *= 0.785;
+                            this.vy *= 0.785;
 
                             const speed = Math.hypot(this.vx, this.vy);
                             const minSpeed = isMobile ? 0.8 : 1.2;
@@ -1997,7 +1983,7 @@
                         pointer.active = true;
                     }
 
-                    // Обработка мыши на ПК: отталкивание работает ПРИ ПРОСТОМ НАВЕДЕНИИ
+                    // Обработка мыши 
                     labCanvas.onmousemove = function(e) {
                         updatePtr(e);
                     };
@@ -2124,7 +2110,6 @@
                             }
                         }
 
-                        // Физика магнитного отталкивания от курсора / пальца
                         const repRadius = isMobile ? 65 : 100;
                         nodes.forEach(n => {
                             n.update();
@@ -2151,9 +2136,7 @@
                     renderLab();
                 }
 
-                /* ----------------------------------------------------
-                   8. Автономный 3D-фон (Canvas 2D/3D particles)
-                ---------------------------------------------------- */
+                /* фон */
                 const bgCanvas = document.getElementById('bg-canvas');
                 if (bgCanvas) {
                     const ctx3d = bgCanvas.getContext('2d');
@@ -2245,9 +2228,7 @@
                     });
                 }
 
-                /* ----------------------------------------------------
-                   9. Кнопки стека (Skills)
-                ---------------------------------------------------- */
+                /* 9. Кнопки стека */
                 document.querySelectorAll('.skill-node').forEach(node => {
                     node.onclick = function() {
                         getAudio();
