@@ -1,0 +1,2280 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="emerald">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Максим // 3D Cyber Resume & Interactive Lab</title>
+    
+    <!-- Шрифты -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* CSS Переменные тем оформления */
+        :root, html[data-theme="emerald"] {
+            --bg: #05070d;
+            --card-bg: rgba(13, 19, 33, 0.94);
+            --card-border: rgba(0, 255, 170, 0.22);
+            --card-hover-border: rgba(0, 255, 170, 0.85);
+            --accent: #00ffaa;
+            --accent-rgb: 0, 255, 170;
+            --accent-glow: rgba(0, 255, 170, 0.35);
+            --accent-cyan: #00e5ff;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --mono: 'Fira Code', monospace;
+            --sans: 'Space Grotesk', sans-serif;
+        }
+
+        html[data-theme="cyan"] {
+            --bg: #040814;
+            --card-bg: rgba(10, 22, 40, 0.94);
+            --card-border: rgba(0, 229, 255, 0.25);
+            --card-hover-border: rgba(0, 229, 255, 0.85);
+            --accent: #00e5ff;
+            --accent-rgb: 0, 229, 255;
+            --accent-glow: rgba(0, 229, 255, 0.4);
+            --accent-cyan: #38bdf8;
+            --text-main: #f8fafc;
+            --text-muted: #93c5fd;
+        }
+
+        html[data-theme="purple"] {
+            --bg: #090514;
+            --card-bg: rgba(22, 14, 38, 0.94);
+            --card-border: rgba(192, 132, 252, 0.25);
+            --card-hover-border: rgba(192, 132, 252, 0.85);
+            --accent: #c084fc;
+            --accent-rgb: 192, 132, 252;
+            --accent-glow: rgba(192, 132, 252, 0.4);
+            --accent-cyan: #f472b6;
+            --text-main: #faf5ff;
+            --text-muted: #d8b4fe;
+        }
+
+        html[data-theme="amber"] {
+            --bg: #100a04;
+            --card-bg: rgba(31, 20, 10, 0.94);
+            --card-border: rgba(255, 174, 0, 0.25);
+            --card-hover-border: rgba(255, 174, 0, 0.9);
+            --accent: #ffae00;
+            --accent-rgb: 255, 174, 0;
+            --accent-glow: rgba(255, 174, 0, 0.4);
+            --accent-cyan: #ffd166;
+            --text-main: #fffaf0;
+            --text-muted: #d6b98a;
+        }
+
+        /* Глобальный сброс и защита от смещения текста */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html, body {
+            width: 100%;
+            min-height: 100%;
+            overflow-x: hidden;
+            background-color: var(--bg);
+            color: var(--text-main);
+            font-family: var(--sans);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
+            scroll-behavior: smooth;
+        }
+
+        /* 3D Canvas Background на чистом Canvas 2D/3D (без внешних зависимостей) */
+        #bg-canvas {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+            opacity: 0.72;
+        }
+
+        .bg-grid {
+            position: fixed;
+            inset: 0;
+            background-image: 
+                linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            background-size: 36px 36px;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Главный контейнер */
+        .container {
+            width: 100%;
+            max-width: 1180px;
+            margin: 0 auto;
+            padding: 14px 14px 60px 14px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Шапка сайта */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 16px;
+            margin-bottom: 24px;
+            background: rgba(10, 15, 26, 0.88);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 14px;
+            font-family: var(--mono);
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .logo {
+            font-weight: 700;
+            font-size: 1.05rem;
+            color: var(--accent);
+            text-shadow: 0 0 12px var(--accent-glow);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            user-select: none;
+        }
+
+        .header-tools {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .tool-btn {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            color: var(--text-main);
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-size: 0.76rem;
+            cursor: pointer;
+            font-family: var(--mono);
+            transition: all 0.2s ease;
+            user-select: none;
+            touch-action: manipulation;
+        }
+        .tool-btn:active {
+            background: var(--accent);
+            color: #05070d;
+            border-color: var(--accent);
+            transform: scale(0.96);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 6px;
+            list-style: none;
+            font-size: 0.8rem;
+            width: 100%;
+            overflow-x: auto;
+            padding-bottom: 2px;
+            scrollbar-width: none;
+        }
+        .nav-links::-webkit-scrollbar { display: none; }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            padding: 7px 13px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.04);
+            white-space: nowrap;
+            display: inline-block;
+            transition: color 0.2s, background 0.2s;
+        }
+        .nav-links a:hover, .nav-links a:active {
+            color: var(--accent);
+            background: rgba(var(--accent-rgb), 0.15);
+        }
+
+        /* Главный экран (Hero) */
+        .hero {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 24px;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+
+        @media (min-width: 860px) {
+            .hero {
+                grid-template-columns: 1.15fr 1fr;
+                gap: 32px;
+                margin-bottom: 55px;
+            }
+        }
+
+        .hero-left {
+            min-width: 0;
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 5px 12px;
+            border-radius: 30px;
+            background: rgba(var(--accent-rgb), 0.1);
+            border: 1px solid var(--accent);
+            font-family: var(--mono);
+            font-size: 0.78rem;
+            color: var(--accent);
+            margin-bottom: 14px;
+        }
+
+        .live-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--accent);
+            box-shadow: 0 0 8px var(--accent);
+            animation: pulse 1.8s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.5; transform: scale(0.9); }
+            50% { opacity: 1; transform: scale(1.15); }
+        }
+
+        .hero-title {
+            font-size: clamp(1.85rem, 5.5vw, 3.2rem);
+            line-height: 1.16;
+            margin-bottom: 14px;
+            background: linear-gradient(135deg, #ffffff 40%, var(--accent-cyan) 80%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            word-wrap: break-word;
+        }
+
+        .hero-desc {
+            font-family: var(--mono);
+            font-size: clamp(0.85rem, 2vw, 0.98rem);
+            color: var(--text-muted);
+            line-height: 1.58;
+            margin-bottom: 18px;
+            word-wrap: break-word;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .hero-btn {
+            padding: 10px 18px;
+            border-radius: 8px;
+            font-family: var(--mono);
+            font-size: 0.82rem;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+            user-select: none;
+            touch-action: manipulation;
+        }
+        .hero-btn-primary {
+            background: var(--accent);
+            color: #05070d;
+            font-weight: 600;
+            border: 1px solid var(--accent);
+        }
+        .hero-btn-primary:active { transform: scale(0.96); }
+
+        .hero-btn-secondary {
+            background: transparent;
+            border: 1px solid var(--accent-cyan);
+            color: var(--accent-cyan);
+        }
+        .hero-btn-secondary:active {
+            background: rgba(0, 229, 255, 0.12);
+            transform: scale(0.96);
+        }
+
+        .hero-extra-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 14px;
+        }
+        .mini-action {
+            border: 1px solid var(--card-border);
+            background: rgba(var(--accent-rgb), 0.06);
+            color: var(--text-main);
+            padding: 7px 11px;
+            border-radius: 8px;
+            font-family: var(--mono);
+            font-size: 0.72rem;
+            cursor: pointer;
+            transition: .2s ease;
+            touch-action: manipulation;
+        }
+        .mini-action:active {
+            border-color: var(--accent);
+            color: var(--accent);
+            transform: scale(0.96);
+        }
+
+        /* Терминал */
+        .terminal-box {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 14px;
+            padding: 14px;
+            font-family: var(--mono);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.45);
+            min-width: 0;
+        }
+
+        .terminal-top {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 8px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .mac-btn { width: 10px; height: 10px; border-radius: 50%; }
+        .btn-red { background: #ff5f56; }
+        .btn-yellow { background: #ffbd2e; }
+        .btn-green { background: #27c93f; }
+        .terminal-term-title { margin-left: auto; font-size: 0.68rem; color: var(--text-muted); }
+
+        .terminal-screen {
+            font-size: 0.82rem;
+            color: #86efac;
+            line-height: 1.48;
+            min-height: 120px;
+            max-height: 160px;
+            overflow-y: auto;
+            word-break: break-word;
+        }
+
+        .quick-chips {
+            display: flex;
+            gap: 6px;
+            overflow-x: auto;
+            padding: 8px 0 4px 0;
+            scrollbar-width: none;
+        }
+        .quick-chips::-webkit-scrollbar { display: none; }
+
+        .chip-btn {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: var(--accent);
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.74rem;
+            cursor: pointer;
+            white-space: nowrap;
+            font-family: var(--mono);
+            user-select: none;
+            transition: all 0.15s;
+            touch-action: manipulation;
+        }
+        .chip-btn:active {
+            background: var(--accent);
+            color: #05070d;
+            transform: scale(0.95);
+        }
+
+        .terminal-input-bar {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 6px;
+            padding-top: 6px;
+            border-top: 1px dashed rgba(255, 255, 255, 0.12);
+        }
+
+        .terminal-input {
+            background: transparent;
+            border: none;
+            color: var(--accent);
+            font-family: var(--mono);
+            font-size: 0.85rem;
+            outline: none;
+            width: 100%;
+        }
+        .terminal-error { color: #f87171; }
+
+        /* Секции общие */
+        .section-header {
+            margin-bottom: 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-direction: column;
+            gap: 8px;
+        }
+        @media (min-width: 768px) {
+            .section-header {
+                flex-direction: row;
+                align-items: flex-end;
+            }
+        }
+
+        .section-title {
+            font-size: clamp(1.3rem, 3.5vw, 1.8rem);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .section-title span {
+            color: var(--accent);
+            font-family: var(--mono);
+            font-size: 0.95rem;
+        }
+
+        /* Секция: Обо мне */
+        .about-section {
+            margin-bottom: 50px;
+        }
+
+        .about-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 16px;
+            box-shadow: 0 12px 35px rgba(0,0,0,0.4);
+        }
+
+        @media (min-width: 600px) {
+            .about-card { padding: 22px; }
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+            align-items: stretch;
+        }
+
+        @media (min-width: 800px) {
+            .about-grid {
+                grid-template-columns: 1fr 1.35fr;
+                gap: 26px;
+            }
+        }
+
+        .cyber-id-badge {
+            background: linear-gradient(145deg, rgba(20, 27, 45, 0.95), rgba(10, 14, 25, 0.98));
+            border: 1px solid var(--card-border);
+            border-radius: 14px;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .id-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            font-family: var(--mono);
+            font-size: 0.72rem;
+            color: var(--accent-cyan);
+            border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
+            padding-bottom: 6px;
+        }
+
+        .id-avatar-row {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 12px;
+        }
+
+        .id-avatar {
+            width: 54px;
+            height: 54px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--accent), var(--accent-cyan));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #05070d;
+            box-shadow: 0 0 16px var(--accent-glow);
+            flex-shrink: 0;
+        }
+
+        .id-name {
+            font-size: 1.18rem;
+            font-weight: 700;
+        }
+
+        .id-role {
+            font-family: var(--mono);
+            font-size: 0.78rem;
+            color: var(--accent);
+        }
+
+        .id-meta-list {
+            margin-top: 8px;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            padding-top: 8px;
+        }
+
+        .id-meta-item {
+            font-family: var(--mono);
+            font-size: 0.76rem;
+            color: var(--text-muted);
+            margin-bottom: 5px;
+            display: flex;
+            justify-content: space-between;
+            gap: 8px;
+        }
+
+        .id-meta-item span:last-child {
+            color: #fff;
+            text-align: right;
+            word-break: break-word;
+        }
+
+        /* Вкладки Обо мне */
+        .about-tabs-nav {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 14px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding-bottom: 8px;
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+        .about-tabs-nav::-webkit-scrollbar { display: none; }
+
+        .atab-btn {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-muted);
+            font-family: var(--mono);
+            font-size: 0.78rem;
+            padding: 7px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+            user-select: none;
+            touch-action: manipulation;
+        }
+
+        .atab-btn.active {
+            background: rgba(var(--accent-rgb), 0.16);
+            border-color: var(--accent);
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .atab-content {
+            display: none;
+            font-size: 0.88rem;
+            line-height: 1.58;
+            color: var(--text-muted);
+            animation: fadeIn 0.2s ease;
+        }
+
+        .atab-content.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(4px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .highlight {
+            color: var(--accent-cyan);
+            font-weight: 500;
+        }
+
+        /* Проекты с 3D ПЕРЕВОРОТОМ (FLIP CARDS) */
+        .projects-section {
+            margin-bottom: 50px;
+        }
+
+        .project-filters {
+            display: flex;
+            gap: 6px;
+            overflow-x: auto;
+            width: 100%;
+            padding-bottom: 6px;
+            scrollbar-width: none;
+            font-family: var(--mono);
+        }
+        .project-filters::-webkit-scrollbar { display: none; }
+
+        .filter-btn {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-muted);
+            padding: 7px 14px;
+            border-radius: 8px;
+            font-size: 0.76rem;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.2s;
+            user-select: none;
+            touch-action: manipulation;
+        }
+
+        .filter-btn.active {
+            background: rgba(var(--accent-rgb), 0.18);
+            border-color: var(--accent);
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 18px;
+            margin-top: 12px;
+        }
+
+        @media (min-width: 680px) {
+            .projects-grid {
+                grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+                gap: 20px;
+            }
+        }
+
+        /* Контейнер 3D переворота */
+        .flip-container {
+            background-color: transparent;
+            min-height: 410px;
+            perspective: 1000px;
+            display: flex;
+        }
+
+        .flip-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1);
+            transform-style: preserve-3d;
+        }
+
+        .flip-container.flipped .flip-inner {
+            transform: rotateY(180deg);
+        }
+
+        .flip-front, .flip-back {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 14px;
+            padding: 18px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        /* Передняя сторона */
+        .flip-front {
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .flip-container:hover .flip-front {
+            border-color: var(--card-hover-border);
+            box-shadow: 0 8px 24px rgba(var(--accent-rgb), 0.15);
+        }
+
+        /* Задняя сторона */
+        .flip-back {
+            transform: rotateY(180deg);
+            border-color: var(--accent);
+            box-shadow: inset 0 0 20px rgba(var(--accent-rgb), 0.1);
+        }
+
+        .project-tag {
+            font-family: var(--mono);
+            font-size: 0.68rem;
+            color: var(--accent-cyan);
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            margin-bottom: 6px;
+            display: inline-block;
+        }
+
+        .project-title {
+            font-size: 1.18rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 8px;
+        }
+
+        .project-summary {
+            font-size: 0.84rem;
+            color: var(--text-muted);
+            line-height: 1.48;
+            margin-bottom: 14px;
+        }
+
+        .tech-pill-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 14px;
+        }
+
+        .pill {
+            font-family: var(--mono);
+            font-size: 0.68rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 3px 7px;
+            border-radius: 5px;
+            color: #cbd5e1;
+        }
+
+        .card-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 10px;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            margin-top: auto;
+        }
+
+        .btn-inspect {
+            background: transparent;
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            font-family: var(--mono);
+            font-size: 0.76rem;
+            padding: 7px 13px;
+            border-radius: 7px;
+            cursor: pointer;
+            transition: background 0.2s, color 0.2s;
+            user-select: none;
+            touch-action: manipulation;
+        }
+        .btn-inspect:active {
+            background: var(--accent);
+            color: #05070d;
+        }
+
+        /* Задняя сторона карточки: скриншот и лог */
+        .mock-screenshot {
+            width: 100%;
+            height: 110px;
+            border-radius: 8px;
+            background: linear-gradient(135deg, rgba(16, 21, 36, 0.95), rgba(26, 35, 58, 0.9));
+            border: 1px dashed var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+        .mock-screenshot::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(0,0,0,0.25) 3px, rgba(0,0,0,0.25) 6px);
+            pointer-events: none;
+        }
+        .mock-text {
+            font-family: var(--mono);
+            color: var(--accent);
+            font-size: 0.74rem;
+            z-index: 1;
+        }
+
+        .bench-box {
+            background: rgba(0, 0, 0, 0.45);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 6px;
+            padding: 8px 10px;
+            font-family: var(--mono);
+            font-size: 0.72rem;
+            color: #86efac;
+            line-height: 1.45;
+            margin-bottom: 10px;
+        }
+
+        .btn-card-test {
+            background: rgba(var(--accent-rgb), 0.15);
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            padding: 6px 10px;
+            border-radius: 6px;
+            font-family: var(--mono);
+            font-size: 0.72rem;
+            cursor: pointer;
+            margin-bottom: 10px;
+            width: 100%;
+            transition: all 0.2s;
+            touch-action: manipulation;
+        }
+        .btn-card-test:active {
+            background: var(--accent);
+            color: #05070d;
+        }
+
+        /* 3D Лаборатория Узлов */
+        .lab-section {
+            margin-bottom: 50px;
+        }
+
+        .lab-container {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 14px;
+            padding: 14px;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+        }
+
+        .lab-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .lab-controls {
+            display: flex;
+            gap: 6px;
+            font-family: var(--mono);
+            width: 100%;
+            flex-wrap: wrap;
+        }
+
+        @media (min-width: 600px) {
+            .lab-controls { width: auto; flex-wrap: nowrap; }
+        }
+
+        .lab-btn {
+            background: rgba(var(--accent-rgb), 0.1);
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 0.74rem;
+            cursor: pointer;
+            flex: 1;
+            text-align: center;
+            font-family: var(--mono);
+            transition: background 0.15s;
+            user-select: none;
+            touch-action: manipulation;
+            white-space: nowrap;
+        }
+        .lab-btn:active {
+            background: var(--accent);
+            color: #05070d;
+        }
+
+        /* Холст узлов */
+        #lab-canvas {
+            width: 100%;
+            height: 280px;
+            background: rgba(4, 7, 13, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 10px;
+            display: block;
+            cursor: crosshair;
+            touch-action: none; /* Запрещает странице скроллиться при касании холста */
+        }
+
+        .lab-instructions {
+            font-family: var(--mono);
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            margin-top: 8px;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 4px;
+        }
+
+        /* Стек навыков */
+        .skills-section {
+            margin-bottom: 40px;
+        }
+
+        .skills-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: center;
+        }
+
+        .skill-node {
+            padding: 9px 15px;
+            border-radius: 10px;
+            background: rgba(13, 19, 33, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            font-family: var(--mono);
+            font-size: 0.82rem;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.3);
+            cursor: pointer;
+            user-select: none;
+            transition: all 0.2s;
+            touch-action: manipulation;
+        }
+        .skill-node:active, .skill-node.active-skill {
+            border-color: var(--accent);
+            color: var(--accent);
+            box-shadow: 0 0 14px var(--accent-glow);
+            transform: translateY(-2px);
+        }
+
+        /* Модальное окно узла */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(4, 6, 12, 0.88);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            z-index: 9999;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 14px;
+        }
+
+        .modal-overlay.active { display: flex; }
+
+        .modal-content {
+            background: #0d1322;
+            border: 1px solid var(--accent);
+            border-radius: 16px;
+            width: 100%;
+            max-width: 540px;
+            padding: 22px 18px;
+            position: relative;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+            max-height: 88vh;
+            overflow-y: auto;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            width: 38px;
+            height: 38px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: var(--text-main);
+            font-size: 1.4rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            user-select: none;
+            touch-action: manipulation;
+        }
+        .modal-close:active {
+            background: var(--accent);
+            color: #05070d;
+        }
+
+        .modal-title {
+            font-size: 1.25rem;
+            margin-bottom: 8px;
+            padding-right: 42px;
+        }
+
+        .node-stat-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+            margin: 14px 0;
+        }
+        .node-stat {
+            border: 1px solid var(--card-border);
+            background: rgba(var(--accent-rgb), 0.045);
+            border-radius: 9px;
+            padding: 10px;
+        }
+        .node-stat small {
+            display: block;
+            color: var(--text-muted);
+            font-family: var(--mono);
+            font-size: .65rem;
+            margin-bottom: 3px;
+        }
+        .node-stat strong {
+            font-family: var(--mono);
+            color: var(--accent);
+        }
+
+        .btn-modal-action {
+            background: var(--accent);
+            color: #05070d;
+            border: none;
+            padding: 11px 16px;
+            border-radius: 8px;
+            font-family: var(--mono);
+            font-weight: 600;
+            font-size: 0.82rem;
+            cursor: pointer;
+            width: 100%;
+            user-select: none;
+            touch-action: manipulation;
+        }
+        .btn-modal-close {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: var(--text-main);
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-family: var(--mono);
+            cursor: pointer;
+            width: 100%;
+            user-select: none;
+            touch-action: manipulation;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-grid"></div>
+    <!-- 3D Canvas Background -->
+    <canvas id="bg-canvas"></canvas>
+
+    <div class="container">
+        <!-- Шапка -->
+        <header>
+            <div class="logo">
+                <span>&lt;/&gt;</span> MAXIM // DEV_CORE
+            </div>
+            <div class="header-tools">
+                <button class="tool-btn" id="theme-toggle">Тема: Изумруд</button>
+                <button class="tool-btn" id="sound-toggle">Звук: ВЫКЛ</button>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#about">> 00. Обо мне</a></li>
+                <li><a href="#projects">> 01. Проекты</a></li>
+                <li><a href="#lab">> 02. 3D Лаборатория</a></li>
+                <li><a href="#skills">> 03. Стек</a></li>
+            </ul>
+        </header>
+
+        <!-- Главный экран -->
+        <section class="hero">
+            <div class="hero-left">
+                <div class="status-badge">
+                    <span class="live-dot"></span> BSUIR // IaTP // 2026
+                </div>
+                <h1 class="hero-title">Студент ИиТП &amp;<br>Будущий Software Developer</h1>
+                <p class="hero-desc">> Развиваюсь в системном программировании, алгоритмах и создании приложений. Учусь в БГУИР на ИиТП, работаю с C++, Flutter/Dart, Web и Git, а знания превращаю в собственные интерактивные проекты.</p>
+                <div class="hero-actions">
+                    <a href="#about" class="hero-btn hero-btn-primary">Личное Дело (Bio) &darr;</a>
+                    <a href="#projects" class="hero-btn hero-btn-secondary">Мои проекты &rarr;</a>
+                </div>
+                <div class="hero-extra-actions">
+                    <button class="mini-action" id="btn-random-flip">↯ Случайный проект</button>
+                    <button class="mini-action" id="btn-focus-terminal">⌘ Терминал</button>
+                    <button class="mini-action" id="btn-go-lab">◉ Лаборатория узлов</button>
+                </div>
+            </div>
+
+            <!-- Терминал -->
+            <div class="terminal-box">
+                <div class="terminal-top">
+                    <span class="mac-btn btn-red"></span>
+                    <span class="mac-btn btn-yellow"></span>
+                    <span class="mac-btn btn-green"></span>
+                    <span class="terminal-term-title">zsh: interactive shell</span>
+                </div>
+                <div class="terminal-screen" id="term-log">
+                    <p>[CORE_INIT] Виртуальная среда готова к работе.</p>
+                    <p>[HINT] Нажмите на кнопку-чипс или введите команду.</p>
+                </div>
+                <!-- Чипсы -->
+                <div class="quick-chips">
+                    <button class="chip-btn" data-cmd="about">about</button>
+                    <button class="chip-btn" data-cmd="projects">projects</button>
+                    <button class="chip-btn" data-cmd="skills">skills</button>
+                    <button class="chip-btn" data-cmd="matrix">matrix</button>
+                    <button class="chip-btn" data-cmd="clear">clear</button>
+                </div>
+                <div class="terminal-input-bar">
+                    <span style="color: var(--accent);">$</span>
+                    <input type="text" id="term-cmd" class="terminal-input" placeholder="Введите команду (help, about, projects)..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+                </div>
+            </div>
+        </section>
+
+        <!-- Вкладка: Обо мне -->
+        <section class="about-section" id="about">
+            <div class="section-header">
+                <div>
+                    <h2 class="section-title"><span>00.</span> Личное Дело // Максим</h2>
+                    <p style="color: var(--text-muted); font-family: var(--mono); font-size: 0.78rem; margin-top: 4px;">
+                        Учёба, специализация, инженерный путь и контакты
+                    </p>
+                </div>
+            </div>
+
+            <div class="about-card">
+                <div class="about-grid">
+                    <!-- Кибер-Паспорт -->
+                    <div class="cyber-id-badge">
+                        <div class="id-header">
+                            <span>CYBER_ID // 2026</span>
+                            <span>STATUS: ACTIVE</span>
+                        </div>
+                        <div class="id-avatar-row">
+                            <div class="id-avatar">&lt;/&gt;</div>
+                            <div>
+                                <h3 class="id-name">Максим</h3>
+                                <p class="id-role">Software Developer &amp; Student</p>
+                            </div>
+                        </div>
+                        <div class="id-meta-list">
+                            <div class="id-meta-item">
+                                <span>Университет:</span>
+                                <span>БГУИР (BSUIR)</span>
+                            </div>
+                            <div class="id-meta-item">
+                                <span>Факультет:</span>
+                                <span>ФКСиС (CSaN)</span>
+                            </div>
+                            <div class="id-meta-item">
+                                <span>Специальность:</span>
+                                <span>ИиТП (SE / Algo)</span>
+                            </div>
+                            <div class="id-meta-item">
+                                <span>Локация:</span>
+                                <span>4-й корпус / Минск</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Вкладки биографии и опыта -->
+                    <div class="about-details">
+                        <div class="about-tabs-nav">
+                            <button class="atab-btn active" data-target="tab-edu">Образование</button>
+                            <button class="atab-btn" data-target="tab-spec">Фокус &amp; Стек</button>
+                            <button class="atab-btn" data-target="tab-philosophy">Философия</button>
+                            <button class="atab-btn" data-target="tab-contacts">Контакты</button>
+                        </div>
+
+                        <!-- Контент вкладок -->
+                        <div class="atab-content active" id="tab-edu">
+                            <p style="margin-bottom:10px;">
+                                Студент <span class="highlight">Белорусского государственного университета информатики и радиоэлектроники (БГУИР)</span>, факультета компьютерных систем и сетей (<span class="highlight">ФКСиС</span>).
+                            </p>
+                            <p style="margin-bottom:10px;">
+                                Специальность — <span class="highlight">Информатика и технологии программирования (ИиТП)</span>. Фундаментальная подготовка по теории алгоритмов, дискретной математике, архитектуре ЭВМ и программированию.
+                            </p>
+                            <p>
+                                Занятия проходят в 4-м корпусе. Практикую уверенный технический английский, чтение спецификаций RFC, стандартов ISO C++ и документации мобильных и распределённых систем.
+                            </p>
+                        </div>
+
+                        <div class="atab-content" id="tab-spec">
+                            <p style="margin-bottom:10px;">
+                                Мой основной фокус — <span class="highlight">C++ и алгоритмы</span>, мобильная разработка на <span class="highlight">Flutter / Dart</span>, а также Web-технологии и системное программирование.
+                            </p>
+                            <p>
+                                Интересуюсь вопросами оптимизации производительности, кэш-локальности (Data-Oriented Design), созданием интерактивных UI и архитектурой приложений.
+                            </p>
+                        </div>
+
+                        <div class="atab-content" id="tab-philosophy">
+                            <p style="margin-bottom:10px;">
+                                «Для меня хороший код — это код, который предсказуем в работе, прозрачен в поддержке и не создает лишнего overhead по ресурсам.»
+                            </p>
+                            <p>
+                                Люблю проекты с выразительной интерактивностью: от приложения Love Story на Flutter до алгоритмических визуализаторов и 3D-движков.
+                            </p>
+                        </div>
+
+                        <div class="atab-content" id="tab-contacts">
+                            <p style="margin-bottom:10px;">
+                                Локация: <span class="highlight">Минск, Беларусь</span>.
+                            </p>
+                            <p style="margin-bottom:10px;">
+                                Статус: <span class="highlight">Открыт к перспективным стажировкам</span>, разработке мобильных и системных приложений, а также R&amp;D-проектам.
+                            </p>
+                            <p>
+                                Связь: доступен через Telegram, GitHub и электронную почту.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Проекты (3D FLIP КАРТОЧКИ) -->
+        <section class="projects-section" id="projects">
+            <div class="section-header">
+                <div>
+                    <h2 class="section-title"><span>01.</span> Реализованные Проекты</h2>
+                    <p style="color: var(--text-muted); font-family: var(--mono); font-size: 0.78rem; margin-top: 4px;">
+                        Нажмите кнопку «Детали &amp; Скрины», чтобы перевернуть 3D-карточку и запустить диагностику
+                    </p>
+                </div>
+                <div class="project-filters">
+                    <button class="filter-btn active" data-filter="all">Все [5]</button>
+                    <button class="filter-btn" data-filter="apps">Flutter &amp; Apps</button>
+                    <button class="filter-btn" data-filter="systems">C++ &amp; Systems</button>
+                    <button class="filter-btn" data-filter="graphics">3D &amp; WebGL</button>
+                </div>
+            </div>
+
+            <div class="projects-grid" id="projects-container">
+                
+                <!-- Проект 1: Love Story -->
+                <div class="flip-container" data-category="apps">
+                    <div class="flip-inner">
+                        <div class="flip-front">
+                            <div>
+                                <span class="project-tag">Flutter / Personal App</span>
+                                <h3 class="project-title">Love Story</h3>
+                                <p class="project-summary">Персональное интерактивное приложение для двоих: совместная интерактивная карта свиданий, памятные даты, скрытые послания и романтические мини-игры.</p>
+                                <div class="tech-pill-row">
+                                    <span class="pill">Flutter</span>
+                                    <span class="pill">Dart</span>
+                                    <span class="pill">GoRouter</span>
+                                    <span class="pill">UI/UX</span>
+                                </div>
+                            </div>
+                            <div class="card-actions">
+                                <span style="font-family: var(--mono); font-size: 0.72rem; color: var(--accent-cyan);">● In Active Dev</span>
+                                <button class="btn-inspect btn-flip-trigger">Детали &amp; Скрины &rarr;</button>
+                            </div>
+                        </div>
+                        <div class="flip-back">
+                            <div>
+                                <h3 class="project-title" style="margin-bottom: 6px;">Love Story // UI</h3>
+                                <div class="mock-screenshot">
+                                    <span class="mock-text">[ FLUTTER_MAP_PREVIEW ]</span>
+                                </div>
+                                <div class="bench-box" id="bench-log-1">
+                                    > Платформы: Android + iOS<br>
+                                    > Состояние: Riverpod / Bloc<br>
+                                    > Навигация: GoRouter 14.x
+                                </div>
+                                <button class="btn-card-test" data-target-log="bench-log-1" data-bench="60 FPS animations | Clean architecture | Secure local storage">Запустить Тест Модулей</button>
+                            </div>
+                            <div class="card-actions">
+                                <button class="btn-inspect btn-flip-back" style="width:100%; text-align:center;">&larr; Назад к описанию</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Проект 2: VoxelEngine 3D -->
+                <div class="flip-container" data-category="systems graphics">
+                    <div class="flip-inner">
+                        <div class="flip-front">
+                            <div>
+                                <span class="project-tag">Low-Level Graphics</span>
+                                <h3 class="project-title">VoxelEngine 3D</h3>
+                                <p class="project-summary">Процедурный 3D воксельный движок реального времени на C++20 и OpenGL. Поддержка Octree, генерации шума Перлина и оптимизации Greedy Meshing.</p>
+                                <div class="tech-pill-row">
+                                    <span class="pill">C++20</span>
+                                    <span class="pill">OpenGL</span>
+                                    <span class="pill">GLSL</span>
+                                    <span class="pill">SIMD</span>
+                                </div>
+                            </div>
+                            <div class="card-actions">
+                                <span style="font-family: var(--mono); font-size: 0.72rem; color: var(--accent-cyan);">● Release Core</span>
+                                <button class="btn-inspect btn-flip-trigger">Детали &amp; Скрины &rarr;</button>
+                            </div>
+                        </div>
+                        <div class="flip-back">
+                            <div>
+                                <h3 class="project-title" style="margin-bottom: 6px;">VoxelEngine // Metrics</h3>
+                                <div class="mock-screenshot">
+                                    <span class="mock-text">[ VOXEL_FRAME_BUFFER ]</span>
+                                </div>
+                                <div class="bench-box" id="bench-log-2">
+                                    > Чанки: 512x512 за 14.2 ms<br>
+                                    > 120 FPS стабильно<br>
+                                    > RAM: 180MB (Greedy Meshing)
+                                </div>
+                                <button class="btn-card-test" data-target-log="bench-log-2" data-bench="Zero memory leaks | 0.8ms draw call time | Octree depth: 8">Запустить Тест Рендера</button>
+                            </div>
+                            <div class="card-actions">
+                                <button class="btn-inspect btn-flip-back" style="width:100%; text-align:center;">&larr; Назад к описанию</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Проект 3: DistribKV Store -->
+                <div class="flip-container" data-category="systems">
+                    <div class="flip-inner">
+                        <div class="flip-front">
+                            <div>
+                                <span class="project-tag">Distributed Systems</span>
+                                <h3 class="project-title">DistribKV Store</h3>
+                                <p class="project-summary">Отказоустойчивое ключ-значение хранилище на базе алгоритма консенсуса Raft. Поддержка кворума нод, динамического масштабирования и WAL-лога.</p>
+                                <div class="tech-pill-row">
+                                    <span class="pill">Go</span>
+                                    <span class="pill">Raft</span>
+                                    <span class="pill">gRPC</span>
+                                    <span class="pill">Docker</span>
+                                </div>
+                            </div>
+                            <div class="card-actions">
+                                <span style="font-family: var(--mono); font-size: 0.72rem; color: var(--accent-cyan);">● Cluster Active</span>
+                                <button class="btn-inspect btn-flip-trigger">Детали &amp; Скрины &rarr;</button>
+                            </div>
+                        </div>
+                        <div class="flip-back">
+                            <div>
+                                <h3 class="project-title" style="margin-bottom: 6px;">DistribKV // Cluster</h3>
+                                <div class="mock-screenshot">
+                                    <span class="mock-text">[ RAFT_CONSENSUS_LOG ]</span>
+                                </div>
+                                <div class="bench-box" id="bench-log-3">
+                                    > RPS: 48,000 req/s<br>
+                                    > Задержка p95: 1.4ms<br>
+                                    > Кворум: 100% согласованность
+                                </div>
+                                <button class="btn-card-test" data-target-log="bench-log-3" data-bench="5 nodes quorum confirmed | Leader election: 140ms | 0 packet loss">Провести Стресс-Тест</button>
+                            </div>
+                            <div class="card-actions">
+                                <button class="btn-inspect btn-flip-back" style="width:100%; text-align:center;">&larr; Назад к описанию</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Проект 4: Neural3D Flow -->
+                <div class="flip-container" data-category="graphics">
+                    <div class="flip-inner">
+                        <div class="flip-front">
+                            <div>
+                                <span class="project-tag">AI Visualizer</span>
+                                <h3 class="project-title">Neural3D Flow</h3>
+                                <p class="project-summary">Трёхмерная среда для визуализации графов нейронных сетей, распространения весов матриц и сигналов в реальном времени с шейдерными эффектами.</p>
+                                <div class="tech-pill-row">
+                                    <span class="pill">WebGL</span>
+                                    <span class="pill">TypeScript</span>
+                                    <span class="pill">Shaders</span>
+                                </div>
+                            </div>
+                            <div class="card-actions">
+                                <span style="font-family: var(--mono); font-size: 0.72rem; color: var(--accent-cyan);">● WebGL 2.0</span>
+                                <button class="btn-inspect btn-flip-trigger">Детали &amp; Скрины &rarr;</button>
+                            </div>
+                        </div>
+                        <div class="flip-back">
+                            <div>
+                                <h3 class="project-title" style="margin-bottom: 6px;">Neural3D // Visualizer</h3>
+                                <div class="mock-screenshot">
+                                    <span class="mock-text">[ NEURAL_TOPOLOGY_VIEW ]</span>
+                                </div>
+                                <div class="bench-box" id="bench-log-4">
+                                    > 10,000 активных синапсов<br>
+                                    > Шейдерная интерполяция<br>
+                                    > 60 FPS (Hardware Accel)
+                                </div>
+                                <button class="btn-card-test" data-target-log="bench-log-4" data-bench="GPU instancing active | 16.6ms per frame | VR/XR compatible">Запустить Бенчмарк GPU</button>
+                            </div>
+                            <div class="card-actions">
+                                <button class="btn-inspect btn-flip-back" style="width:100%; text-align:center;">&larr; Назад к описанию</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Проект 5: Algorithm Practice -->
+                <div class="flip-container" data-category="systems">
+                    <div class="flip-inner">
+                        <div class="flip-front">
+                            <div>
+                                <span class="project-tag">Algorithms &amp; DS</span>
+                                <h3 class="project-title">Algorithm Practice</h3>
+                                <p class="project-summary">Регулярная практика решения олимпиадных и алгоритмических задач на C++: графовые структуры, динамическое программирование, структуры данных и быстрый I/O.</p>
+                                <div class="tech-pill-row">
+                                    <span class="pill">C++</span>
+                                    <span class="pill">STL</span>
+                                    <span class="pill">Algorithms</span>
+                                    <span class="pill">Graphs</span>
+                                </div>
+                            </div>
+                            <div class="card-actions">
+                                <span style="font-family: var(--mono); font-size: 0.72rem; color: var(--accent-cyan);">● Competitive Code</span>
+                                <button class="btn-inspect btn-flip-trigger">Детали &amp; Скрины &rarr;</button>
+                            </div>
+                        </div>
+                        <div class="flip-back">
+                            <div>
+                                <h3 class="project-title" style="margin-bottom: 6px;">Algorithms // Stats</h3>
+                                <div class="mock-screenshot">
+                                    <span class="mock-text">[ AST_DIJKSTRA_PROFILE ]</span>
+                                </div>
+                                <div class="bench-box" id="bench-log-5">
+                                    > Асимптотика: O(E log V)<br>
+                                    > Fast I/O: 0.04s на 10^6 чисел<br>
+                                    > Шаблоны: С++20 Concepts
+                                </div>
+                                <button class="btn-card-test" data-target-log="bench-log-5" data-bench="All tests passed (100% test coverage) | Time limit: OK | Memory limit: OK">Запустить Набор Тестов</button>
+                            </div>
+                            <div class="card-actions">
+                                <button class="btn-inspect btn-flip-back" style="width:100%; text-align:center;">&larr; Назад к описанию</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- 3D Лаборатория Узлов -->
+        <section class="lab-section" id="lab">
+            <div class="section-header">
+                <div>
+                    <h2 class="section-title"><span>02.</span> Интерактивная Сеть Узлов</h2>
+                    <p style="color: var(--text-muted); font-family: var(--mono); font-size: 0.78rem; margin-top: 4px;">
+                        Наведите курсор или ведите пальцем для разгона узлов, кликайте в пустое место для создания или нажмите на узел для инспекции
+                    </p>
+                </div>
+                <div class="lab-controls">
+                    <button class="lab-btn" id="btn-add-nodes">+5 Узлов</button>
+                    <button class="lab-btn" id="btn-burst">Импульс</button>
+                    <button class="lab-btn" id="btn-pause-lab">Пауза</button>
+                    <button class="lab-btn" id="btn-clear-lab">Сброс</button>
+                </div>
+            </div>
+
+            <div class="lab-container">
+                <canvas id="lab-canvas"></canvas>
+                <div class="lab-instructions">
+                    <span>STATUS: MAGNETIC FIELD ACTIVE</span>
+                    <span id="lab-node-count">АКТИВНО: 28 УЗЛОВ</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Стек навыков -->
+        <section class="skills-section" id="skills">
+            <div class="section-header">
+                <div>
+                    <h2 class="section-title"><span>03.</span> Технологический Стек</h2>
+                    <p style="color: var(--text-muted); font-family: var(--mono); font-size: 0.78rem; margin-top: 4px;">
+                        Нажмите на навык: он подсветится и выведет команду в терминал
+                    </p>
+                </div>
+            </div>
+            <div class="skills-grid" id="skills-container">
+                <div class="skill-node" data-skill="C++20">C++20 / STL / OOP</div>
+                <div class="skill-node" data-skill="Flutter / Dart">Flutter / Dart</div>
+                <div class="skill-node" data-skill="Algorithms">Algorithms &amp; Data Structures</div>
+                <div class="skill-node" data-skill="WebGL">WebGL / OpenGL / GLSL</div>
+                <div class="skill-node" data-skill="TypeScript">TypeScript / Modern JS</div>
+                <div class="skill-node" data-skill="Go">Go / Concurrency</div>
+                <div class="skill-node" data-skill="Docker">Docker / Linux Internals</div>
+                <div class="skill-node" data-skill="Git / GitHub">Git / GitHub</div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Модальное окно узла -->
+    <div class="modal-overlay" id="node-modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close" id="node-modal-close">&times;</button>
+            <div style="font-family: var(--mono); color: var(--accent-cyan); font-size: 0.75rem; margin-bottom: 6px;">NETWORK NODE // LIVE SPEC</div>
+            <h2 class="modal-title" id="node-modal-title">NODE-01</h2>
+            <p style="font-size: 0.86rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 12px;">Активный узел динамической сети графа. Координаты рассчитываются в реальном времени с учетом физики отталкивания.</p>
+            <div class="node-stat-grid">
+                <div class="node-stat"><small>ТИП УЗЛА</small><strong id="node-type">CORE</strong></div>
+                <div class="node-stat"><small>СТАТУС</small><strong id="node-state">ONLINE</strong></div>
+                <div class="node-stat"><small>ВЕКТОР VX</small><strong id="node-vx">0.00</strong></div>
+                <div class="node-stat"><small>ВЕКТОР VY</small><strong id="node-vy">0.00</strong></div>
+            </div>
+            <div style="display: flex; gap: 8px; flex-direction: column;">
+                <button class="btn-modal-action" id="btn-node-pulse">Придать Импульс Узлу</button>
+                <button class="btn-modal-close" id="btn-node-close">Закрыть Окно</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Чистый, надежный и оптимизированный JS -->
+    <script>
+        (function() {
+            function startApp() {
+                /* ----------------------------------------------------
+                   1. Звуковой синтезатор (Web Audio API) + Haptic
+                ---------------------------------------------------- */
+                let soundEnabled = false;
+                let audioCtx = null;
+
+                function getAudio() {
+                    try {
+                        if (!audioCtx) {
+                            const Cls = window.AudioContext || window.webkitAudioContext;
+                            if (Cls) audioCtx = new Cls();
+                        }
+                        if (audioCtx && audioCtx.state === 'suspended') {
+                            audioCtx.resume();
+                        }
+                    } catch(e) {}
+                    return audioCtx;
+                }
+
+                function playSound(freq = 600, duration = 0.05, type = 'sine') {
+                    if (!soundEnabled) return;
+                    try {
+                        const ctx = getAudio();
+                        if (!ctx) return;
+                        const now = ctx.currentTime;
+                        const osc = ctx.createOscillator();
+                        const gain = ctx.createGain();
+                        osc.type = type;
+                        osc.frequency.setValueAtTime(freq, now);
+                        gain.gain.setValueAtTime(0.08, now);
+                        gain.gain.linearRampToValueAtTime(0.0001, now + duration);
+                        osc.connect(gain);
+                        gain.connect(ctx.destination);
+                        osc.start(now);
+                        osc.stop(now + duration);
+                    } catch(e) {}
+                }
+
+                function triggerHaptic(ms = 12) {
+                    try { if (navigator.vibrate) navigator.vibrate(ms); } catch(e) {}
+                }
+
+                function feedback(freq = 700, duration = 0.04, ms = 10) {
+                    playSound(freq, duration);
+                    triggerHaptic(ms);
+                }
+
+                // Кнопка звука
+                const soundBtn = document.getElementById('sound-toggle');
+                if (soundBtn) {
+                    soundBtn.onclick = function(e) {
+                        e.preventDefault();
+                        getAudio();
+                        soundEnabled = !soundEnabled;
+                        soundBtn.innerText = soundEnabled ? 'Звук: ВКЛ' : 'Звук: ВЫКЛ';
+                        soundBtn.style.color = soundEnabled ? 'var(--accent)' : 'var(--text-main)';
+                        soundBtn.style.borderColor = soundEnabled ? 'var(--accent)' : 'rgba(255, 255, 255, 0.18)';
+                        if (soundEnabled) feedback(880, 0.08, 20);
+                    };
+                }
+
+                /* ----------------------------------------------------
+                   2. Переключатель тем (4 темы + localStorage)
+                ---------------------------------------------------- */
+                const themes = ['emerald', 'cyan', 'purple', 'amber'];
+                const themeTitles = ['Тема: Изумруд', 'Тема: Циан', 'Тема: Пурпур', 'Тема: Янтарь'];
+                let currentThemeIndex = 0;
+
+                try {
+                    const saved = localStorage.getItem('portfolio-theme');
+                    if (saved && themes.includes(saved)) {
+                        currentThemeIndex = themes.indexOf(saved);
+                        document.documentElement.setAttribute('data-theme', saved);
+                    }
+                } catch(e) {}
+
+                const themeBtn = document.getElementById('theme-toggle');
+                if (themeBtn) {
+                    themeBtn.innerText = themeTitles[currentThemeIndex];
+                    themeBtn.onclick = function(e) {
+                        e.preventDefault();
+                        getAudio();
+                        currentThemeIndex = (currentThemeIndex + 1) % themes.length;
+                        const newTheme = themes[currentThemeIndex];
+                        document.documentElement.setAttribute('data-theme', newTheme);
+                        themeBtn.innerText = themeTitles[currentThemeIndex];
+                        try { localStorage.setItem('portfolio-theme', newTheme); } catch(e) {}
+                        feedback(720, 0.04, 15);
+                    };
+                }
+
+                /* ----------------------------------------------------
+                   3. Плавный скролл навигации
+                ---------------------------------------------------- */
+                document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                    anchor.onclick = function(e) {
+                        const targetId = this.getAttribute('href');
+                        const targetElement = document.querySelector(targetId);
+                        if (targetElement) {
+                            e.preventDefault();
+                            getAudio();
+                            feedback(650, 0.03, 8);
+                            targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        }
+                    };
+                });
+
+                /* ----------------------------------------------------
+                   4. Вкладки "Обо мне"
+                ---------------------------------------------------- */
+                const atabBtns = document.querySelectorAll('.atab-btn');
+                const atabContents = document.querySelectorAll('.atab-content');
+
+                atabBtns.forEach(btn => {
+                    btn.onclick = function(e) {
+                        e.preventDefault();
+                        getAudio();
+                        feedback(850, 0.03, 10);
+                        atabBtns.forEach(b => b.classList.remove('active'));
+                        atabContents.forEach(c => c.classList.remove('active'));
+
+                        this.classList.add('active');
+                        const targetId = this.getAttribute('data-target');
+                        const targetElem = document.getElementById(targetId);
+                        if (targetElem) targetElem.classList.add('active');
+                    };
+                });
+
+                /* ----------------------------------------------------
+                   5. Терминал (история, автодополнение, команды)
+                ---------------------------------------------------- */
+                const termInput = document.getElementById('term-cmd');
+                const termLog = document.getElementById('term-log');
+                const commandHistory = [];
+                let historyIndex = -1;
+
+                const cmdMap = {
+                    'help': 'Команды: about, projects, skills, matrix, status, lab, theme, clear',
+                    'about': 'Максим — студент БГУИР (ФКСиС, ИиТП). Фокус: C++, Flutter/Dart, Web.',
+                    'projects': 'Переверните 3D-карточку любого проекта для метрик и скринов.',
+                    'skills': 'C++20, Flutter/Dart, Algorithms, WebGL, Go, Docker, Git.',
+                    'matrix': 'Неоновый протокол активен. Сеть функционирует стабильно.',
+                    'status': 'ONLINE | BSUIR CSaN // IaTP // 2026 | BUILD: OK',
+                    'lab': 'Лаборатория физики узлов активна ниже.',
+                    'theme': 'Кликните по кнопке темы вверху для смены палитры.',
+                    'clear': '__CLEAR__'
+                };
+
+                function runCommand(rawCmd) {
+                    getAudio();
+                    const cmd = (rawCmd || '').trim().toLowerCase();
+                    if (!cmd || !termLog) return;
+                    feedback(550, 0.05, 12);
+
+                    if (cmd === 'clear') {
+                        termLog.innerHTML = '';
+                    } else if (cmd === 'projects') {
+                        termLog.innerHTML += `<p><span style="color: var(--accent);">$ ${cmd}</span><br>${cmdMap[cmd]}</p>`;
+                        const prj = document.getElementById('projects');
+                        if (prj) prj.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    } else if (cmd === 'lab') {
+                        termLog.innerHTML += `<p><span style="color: var(--accent);">$ ${cmd}</span><br>${cmdMap[cmd]}</p>`;
+                        const lb = document.getElementById('lab');
+                        if (lb) lb.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    } else if (cmd === 'theme' && themeBtn) {
+                        themeBtn.click();
+                    } else if (cmdMap[cmd]) {
+                        termLog.innerHTML += `<p><span style="color: var(--accent);">$ ${cmd}</span><br>${cmdMap[cmd]}</p>`;
+                    } else {
+                        termLog.innerHTML += `<p style="color: #f87171;">bash: команда '${cmd}' не найдена. Нажмите 'help'.</p>`;
+                    }
+                    termLog.scrollTop = termLog.scrollHeight;
+                }
+
+                if (termInput) {
+                    termInput.onkeydown = function(e) {
+                        if (e.key === 'Enter') {
+                            e.preventDefault();
+                            const val = this.value.trim();
+                            if (val) {
+                                commandHistory.push(val);
+                                historyIndex = commandHistory.length;
+                            }
+                            runCommand(val);
+                            this.value = '';
+                            if (window.innerWidth < 768) this.blur();
+                        } else if (e.key === 'ArrowUp') {
+                            e.preventDefault();
+                            if (commandHistory.length > 0) {
+                                historyIndex = Math.max(0, historyIndex - 1);
+                                this.value = commandHistory[historyIndex] || '';
+                            }
+                        } else if (e.key === 'ArrowDown') {
+                            e.preventDefault();
+                            if (commandHistory.length > 0) {
+                                historyIndex = Math.min(commandHistory.length, historyIndex + 1);
+                                this.value = commandHistory[historyIndex] || '';
+                            }
+                        }
+                    };
+                }
+
+                document.querySelectorAll('.chip-btn').forEach(chip => {
+                    chip.onclick = function(e) {
+                        e.preventDefault();
+                        const c = this.getAttribute('data-cmd');
+                        runCommand(c);
+                        if (termInput && window.innerWidth >= 768) termInput.focus();
+                    };
+                });
+
+                /* ----------------------------------------------------
+                   6. 3D Переворот карточек (FLIP) & Фильтры
+                ---------------------------------------------------- */
+                const flipTriggers = document.querySelectorAll('.btn-flip-trigger');
+                const flipBacks = document.querySelectorAll('.btn-flip-back');
+                const filterBtns = document.querySelectorAll('.filter-btn');
+                const projectCards = document.querySelectorAll('.flip-container');
+
+                flipTriggers.forEach(btn => {
+                    btn.onclick = function(e) {
+                        e.preventDefault();
+                        getAudio();
+                        feedback(900, 0.04, 15);
+                        const container = this.closest('.flip-container');
+                        if (container) container.classList.add('flipped');
+                    };
+                });
+
+                flipBacks.forEach(btn => {
+                    btn.onclick = function(e) {
+                        e.preventDefault();
+                        getAudio();
+                        feedback(400, 0.04, 10);
+                        const container = this.closest('.flip-container');
+                        if (container) container.classList.remove('flipped');
+                    };
+                });
+
+                // Кнопки локального тестирования внутри задней стороны карточки
+                document.querySelectorAll('.btn-card-test').forEach(btn => {
+                    btn.onclick = function(e) {
+                        e.preventDefault();
+                        getAudio();
+                        feedback(920, 0.06, 25);
+                        const targetId = this.getAttribute('data-target-log');
+                        const benchText = this.getAttribute('data-bench') || 'Test OK';
+                        const logElem = document.getElementById(targetId);
+                        if (logElem) {
+                            logElem.innerHTML = `> Запуск стенда...<br>> Стресс-тест пройден!<br><span style="color:#00e5ff;">[OK] ${benchText}</span>`;
+                        }
+                    };
+                });
+
+                // Фильтры
+                filterBtns.forEach(btn => {
+                    btn.onclick = function(e) {
+                        e.preventDefault();
+                        getAudio();
+                        feedback(750, 0.03, 10);
+                        filterBtns.forEach(b => b.classList.remove('active'));
+                        this.classList.add('active');
+
+                        const filter = this.getAttribute('data-filter');
+                        projectCards.forEach(card => {
+                            card.classList.remove('flipped'); // сброс переворота
+                            const cat = card.getAttribute('data-category') || '';
+                            if (filter === 'all' || cat.includes(filter)) {
+                                card.style.display = 'flex';
+                            } else {
+                                card.style.display = 'none';
+                            }
+                        });
+                    };
+                });
+
+                // Кнопки Hero действий
+                const btnRandomFlip = document.getElementById('btn-random-flip');
+                if (btnRandomFlip) {
+                    btnRandomFlip.onclick = function(e) {
+                        e.preventDefault();
+                        getAudio();
+                        feedback(880, 0.04, 15);
+                        const visible = [...projectCards].filter(c => c.style.display !== 'none');
+                        if (visible.length > 0) {
+                            const choice = visible[Math.floor(Math.random() * visible.length)];
+                            choice.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                            setTimeout(() => choice.classList.toggle('flipped'), 300);
+                        }
+                    };
+                }
+
+                const btnFocusTerm = document.getElementById('btn-focus-terminal');
+                if (btnFocusTerm && termInput) {
+                    btnFocusTerm.onclick = function(e) {
+                        e.preventDefault();
+                        getAudio();
+                        feedback(700, 0.03, 10);
+                        termInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        setTimeout(() => termInput.focus(), 400);
+                    };
+                }
+
+                const btnGoLab = document.getElementById('btn-go-lab');
+                if (btnGoLab) {
+                    btnGoLab.onclick = function(e) {
+                        e.preventDefault();
+                        getAudio();
+                        feedback(900, 0.04, 15);
+                        const lb = document.getElementById('lab');
+                        if (lb) lb.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    };
+                }
+
+                /* ----------------------------------------------------
+                   7. Интерактивная Лаборатория Узлов (С отталкиванием от курсора)
+                ---------------------------------------------------- */
+                const labCanvas = document.getElementById('lab-canvas');
+                const countSpan = document.getElementById('lab-node-count');
+                const nodeModal = document.getElementById('node-modal-overlay');
+                const nodeClose = document.getElementById('node-modal-close');
+                const nodeClose2 = document.getElementById('btn-node-close');
+                const nodeTitle = document.getElementById('node-modal-title');
+                const nodeType = document.getElementById('node-type');
+                const nodeState = document.getElementById('node-state');
+                const nodeVx = document.getElementById('node-vx');
+                const nodeVy = document.getElementById('node-vy');
+                const nodePulse = document.getElementById('btn-node-pulse');
+
+                let selectedNode = null;
+                let labPaused = false;
+
+                function openNodeModal(node) {
+                    if (!node || !nodeModal) return;
+                    selectedNode = node;
+                    if (nodeTitle) nodeTitle.innerText = `NODE-${String(node.id).padStart(2, '0')}`;
+                    if (nodeType) nodeType.innerText = node.type;
+                    if (nodeState) nodeState.innerText = labPaused ? 'PAUSED' : 'ONLINE';
+                    if (nodeVx) nodeVx.innerText = node.vx.toFixed(2);
+                    if (nodeVy) nodeVy.innerText = node.vy.toFixed(2);
+                    nodeModal.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                    feedback(1000, 0.04, 18);
+                }
+
+                function closeNodeModal() {
+                    if (!nodeModal) return;
+                    nodeModal.classList.remove('active');
+                    document.body.style.overflow = '';
+                    selectedNode = null;
+                }
+
+                if (nodeClose) nodeClose.onclick = closeNodeModal;
+                if (nodeClose2) nodeClose2.onclick = closeNodeModal;
+                if (nodeModal) {
+                    nodeModal.onclick = function(e) {
+                        if (e.target === nodeModal) closeNodeModal();
+                    };
+                }
+
+                if (nodePulse) {
+                    nodePulse.onclick = function() {
+                        if (!selectedNode) return;
+                        selectedNode.vx += (Math.random() - 0.5) * 8;
+                        selectedNode.vy += (Math.random() - 0.5) * 8;
+                        if (nodeVx) nodeVx.innerText = selectedNode.vx.toFixed(2);
+                        if (nodeVy) nodeVy.innerText = selectedNode.vy.toFixed(2);
+                        feedback(1200, 0.05, 25);
+                    };
+                }
+
+                if (labCanvas) {
+                    const ctx = labCanvas.getContext('2d');
+                    let isMobile = window.innerWidth < 768;
+
+                    function syncLabSize() {
+                        const rect = labCanvas.parentElement.getBoundingClientRect();
+                        labCanvas.width = rect.width - 28;
+                        labCanvas.height = 280;
+                        isMobile = window.innerWidth < 768;
+                    }
+                    syncLabSize();
+                    window.addEventListener('resize', syncLabSize);
+
+                    let nodes = [];
+                    let nodeIdCounter = 1;
+
+                    class LabNode {
+                        constructor(x, y) {
+                            this.id = nodeIdCounter++;
+                            this.x = x !== undefined ? x : Math.random() * labCanvas.width;
+                            this.y = y !== undefined ? y : Math.random() * labCanvas.height;
+                            this.vx = (Math.random() - 0.5) * (isMobile ? 1.0 : 1.4);
+                            this.vy = (Math.random() - 0.5) * (isMobile ? 1.0 : 1.4);
+                            this.radius = isMobile ? 3.5 : 4.5;
+                            this.type = this.id === 1 ? 'CORE' : (this.id % 3 === 0 ? 'APP' : 'DATA');
+                        }
+                        update() {
+                            if (labPaused) return;
+
+                            // Плавное ограничение и затухание скорости после импульса
+                            this.vx *= 0.985;
+                            this.vy *= 0.985;
+
+                            const speed = Math.hypot(this.vx, this.vy);
+                            const minSpeed = isMobile ? 0.8 : 1.2;
+                            if (speed < minSpeed) {
+                                this.vx = (this.vx / (speed || 1)) * minSpeed;
+                                this.vy = (this.vy / (speed || 1)) * minSpeed;
+                            }
+                            if (speed > 7.5) {
+                                this.vx = (this.vx / speed) * 7.5;
+                                this.vy = (this.vy / speed) * 7.5;
+                            }
+
+                            this.x += this.vx; 
+                            this.y += this.vy;
+
+                            // Отскок от границ холста
+                            if (this.x <= this.radius) { this.x = this.radius; this.vx = Math.abs(this.vx); }
+                            if (this.x >= labCanvas.width - this.radius) { this.x = labCanvas.width - this.radius; this.vx = -Math.abs(this.vx); }
+                            if (this.y <= this.radius) { this.y = this.radius; this.vy = Math.abs(this.vy); }
+                            if (this.y >= labCanvas.height - this.radius) { this.y = labCanvas.height - this.radius; this.vy = -Math.abs(this.vy); }
+                        }
+                        draw() {
+                            ctx.beginPath();
+                            ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                            const style = getComputedStyle(document.documentElement);
+                            ctx.fillStyle = style.getPropertyValue('--accent').trim() || '#00ffaa';
+                            ctx.fill();
+
+                            if (this === selectedNode) {
+                                ctx.beginPath();
+                                ctx.arc(this.x, this.y, this.radius + 5, 0, Math.PI * 2);
+                                ctx.strokeStyle = style.getPropertyValue('--accent-cyan').trim() || '#00e5ff';
+                                ctx.lineWidth = 1.5;
+                                ctx.stroke();
+                            }
+                        }
+                    }
+
+                    function initNodes(n = 28) {
+                        nodes = [];
+                        nodeIdCounter = 1;
+                        selectedNode = null;
+                        for (let i = 0; i < n; i++) nodes.push(new LabNode());
+                        if (countSpan) countSpan.innerText = `АКТИВНО: ${nodes.length} УЗЛОВ`;
+                    }
+                    initNodes(isMobile ? 18 : 28);
+
+                    function findNodeAt(x, y) {
+                        for (let i = nodes.length - 1; i >= 0; i--) {
+                            const n = nodes[i];
+                            const dist = Math.hypot(n.x - x, n.y - y);
+                            if (dist < n.radius + 12) return n;
+                        }
+                        return null;
+                    }
+
+                    let pointer = { x: -1000, y: -1000, active: false };
+
+                    function updatePtr(e) {
+                        const r = labCanvas.getBoundingClientRect();
+                        let clientX = e.clientX;
+                        let clientY = e.clientY;
+                        if (e.touches && e.touches.length > 0) {
+                            clientX = e.touches[0].clientX;
+                            clientY = e.touches[0].clientY;
+                        }
+                        pointer.x = clientX - r.left;
+                        pointer.y = clientY - r.top;
+                        pointer.active = true;
+                    }
+
+                    // Обработка мыши на ПК: отталкивание работает ПРИ ПРОСТОМ НАВЕДЕНИИ
+                    labCanvas.onmousemove = function(e) {
+                        updatePtr(e);
+                    };
+
+                    labCanvas.onmouseenter = function(e) {
+                        updatePtr(e);
+                    };
+
+                    labCanvas.onmouseleave = function() {
+                        pointer.active = false;
+                        pointer.x = -1000;
+                        pointer.y = -1000;
+                    };
+
+                    labCanvas.onmousedown = function(e) {
+                        getAudio();
+                        updatePtr(e);
+                        const clicked = findNodeAt(pointer.x, pointer.y);
+                        if (clicked) {
+                            openNodeModal(clicked);
+                        } else {
+                            nodes.push(new LabNode(pointer.x, pointer.y));
+                            if (countSpan) countSpan.innerText = `АКТИВНО: ${nodes.length} УЗЛОВ`;
+                            feedback(660, 0.02, 10);
+                        }
+                    };
+
+                    // Обработка касания на смартфонах
+                    labCanvas.ontouchstart = function(e) {
+                        e.preventDefault(); // скролл страницы на холсте отключен
+                        getAudio();
+                        updatePtr(e);
+                        const clicked = findNodeAt(pointer.x, pointer.y);
+                        if (clicked) {
+                            openNodeModal(clicked);
+                        } else {
+                            nodes.push(new LabNode(pointer.x, pointer.y));
+                            if (countSpan) countSpan.innerText = `АКТИВНО: ${nodes.length} УЗЛОВ`;
+                            feedback(660, 0.02, 10);
+                        }
+                    };
+
+                    labCanvas.ontouchmove = function(e) {
+                        e.preventDefault();
+                        updatePtr(e);
+                    };
+
+                    labCanvas.ontouchend = function() {
+                        pointer.active = false;
+                        pointer.x = -1000;
+                        pointer.y = -1000;
+                    };
+
+                    labCanvas.ontouchcancel = function() {
+                        pointer.active = false;
+                    };
+
+                    // Кнопки управления лабораторией
+                    const btnAddNodes = document.getElementById('btn-add-nodes');
+                    if (btnAddNodes) {
+                        btnAddNodes.onclick = function(e) {
+                            e.preventDefault();
+                            getAudio();
+                            feedback(800, 0.03, 15);
+                            for (let i = 0; i < 5; i++) nodes.push(new LabNode());
+                            if (countSpan) countSpan.innerText = `АКТИВНО: ${nodes.length} УЗЛОВ`;
+                        };
+                    }
+
+                    const btnBurst = document.getElementById('btn-burst');
+                    if (btnBurst) {
+                        btnBurst.onclick = function(e) {
+                            e.preventDefault();
+                            getAudio();
+                            feedback(1000, 0.06, 25);
+                            nodes.forEach(n => {
+                                n.vx += (Math.random() - 0.5) * 8;
+                                n.vy += (Math.random() - 0.5) * 8;
+                            });
+                        };
+                    }
+
+                    const btnPauseLab = document.getElementById('btn-pause-lab');
+                    if (btnPauseLab) {
+                        btnPauseLab.onclick = function(e) {
+                            e.preventDefault();
+                            getAudio();
+                            labPaused = !labPaused;
+                            btnPauseLab.innerText = labPaused ? 'Старт' : 'Пауза';
+                            feedback(620, 0.04, 12);
+                        };
+                    }
+
+                    const btnClearLab = document.getElementById('btn-clear-lab');
+                    if (btnClearLab) {
+                        btnClearLab.onclick = function(e) {
+                            e.preventDefault();
+                            getAudio();
+                            feedback(500, 0.03, 15);
+                            initNodes(isMobile ? 14 : 22);
+                        };
+                    }
+
+                    function renderLab() {
+                        requestAnimationFrame(renderLab);
+                        ctx.clearRect(0, 0, labCanvas.width, labCanvas.height);
+
+                        // Соединительные линии
+                        const maxD = isMobile ? 70 : 100;
+                        for (let i = 0; i < nodes.length; i++) {
+                            for (let j = i + 1; j < nodes.length; j++) {
+                                const dx = nodes[i].x - nodes[j].x;
+                                const dy = nodes[i].y - nodes[j].y;
+                                const dist = Math.hypot(dx, dy);
+                                if (dist < maxD) {
+                                    ctx.beginPath();
+                                    ctx.moveTo(nodes[i].x, nodes[i].y);
+                                    ctx.lineTo(nodes[j].x, nodes[j].y);
+                                    const alpha = (1 - dist / maxD) * 0.45;
+                                    ctx.strokeStyle = `rgba(0, 255, 170, ${alpha})`;
+                                    ctx.lineWidth = 1;
+                                    ctx.stroke();
+                                }
+                            }
+                        }
+
+                        // Физика магнитного отталкивания от курсора / пальца
+                        const repRadius = isMobile ? 65 : 100;
+                        nodes.forEach(n => {
+                            n.update();
+                            if (pointer.active) {
+                                const dx = n.x - pointer.x;
+                                const dy = n.y - pointer.y;
+                                const dist = Math.hypot(dx, dy);
+                                if (dist < repRadius && dist > 0) {
+                                    const force = (repRadius - dist) / repRadius;
+                                    const push = force * (isMobile ? 3.5 : 5.0);
+                                    
+                                    // Сдвиг позиции
+                                    n.x += (dx / dist) * push;
+                                    n.y += (dy / dist) * push;
+
+                                    // Дополнительный импульс скорости
+                                    n.vx += (dx / dist) * force * 0.45;
+                                    n.vy += (dy / dist) * force * 0.45;
+                                }
+                            }
+                            n.draw();
+                        });
+                    }
+                    renderLab();
+                }
+
+                /* ----------------------------------------------------
+                   8. Автономный 3D-фон (Canvas 2D/3D particles)
+                ---------------------------------------------------- */
+                const bgCanvas = document.getElementById('bg-canvas');
+                if (bgCanvas) {
+                    const ctx3d = bgCanvas.getContext('2d');
+                    let w = bgCanvas.width = window.innerWidth;
+                    let h = bgCanvas.height = window.innerHeight;
+
+                    const bgParticles = [];
+                    const pCount = window.innerWidth < 768 ? 55 : 110;
+
+                    for (let i = 0; i < pCount; i++) {
+                        bgParticles.push({
+                            x: (Math.random() - 0.5) * 800,
+                            y: (Math.random() - 0.5) * 800,
+                            z: Math.random() * 800 - 400,
+                            size: Math.random() * 2 + 1
+                        });
+                    }
+
+                    let rotX = 0, rotY = 0, tx = 0, ty = 0;
+                    window.addEventListener('mousemove', (e) => {
+                        tx = (e.clientY / window.innerHeight - 0.5) * 0.3;
+                        ty = (e.clientX / window.innerWidth - 0.5) * 0.3;
+                    });
+
+                    function renderBg() {
+                        requestAnimationFrame(renderBg);
+                        ctx3d.clearRect(0, 0, w, h);
+                        rotX += (tx - rotX) * 0.04;
+                        rotY += (ty - rotY) * 0.04;
+
+                        const fov = 400;
+                        const cosY = Math.cos(rotY + 0.0005), sinY = Math.sin(rotY + 0.0005);
+                        const cosX = Math.cos(rotX), sinX = Math.sin(rotX);
+                        
+                        const style = getComputedStyle(document.documentElement);
+                        ctx3d.fillStyle = style.getPropertyValue('--accent').trim() || '#00ffaa';
+                        ctx3d.strokeStyle = ctx3d.fillStyle;
+
+                        const proj = [];
+                        for (let i = 0; i < bgParticles.length; i++) {
+                            const p = bgParticles[i];
+                            p.z -= 0.35;
+                            if (p.z < -380) p.z = 380;
+
+                            const x1 = p.x * cosY - p.z * sinY;
+                            const z1 = p.z * cosY + p.x * sinY;
+                            const y1 = p.y * cosX - z1 * sinX;
+                            const z2 = z1 * cosX + p.y * sinX;
+
+                            const scale = fov / (fov + z2 + 400);
+                            if (scale > 0) {
+                                const px = x1 * scale + w / 2;
+                                const py = y1 * scale + h / 2;
+                                const alpha = Math.max(0, Math.min(1, scale * 0.9));
+                                proj.push({ x: px, y: py, a: alpha });
+
+                                ctx3d.globalAlpha = alpha * 0.6;
+                                ctx3d.beginPath();
+                                ctx3d.arc(px, py, p.size * scale, 0, Math.PI * 2);
+                                ctx3d.fill();
+                            }
+                        }
+
+                        ctx3d.lineWidth = 0.6;
+                        for (let i = 0; i < proj.length; i++) {
+                            for (let j = i + 1; j < proj.length; j++) {
+                                const dx = proj[i].x - proj[j].x, dy = proj[i].y - proj[j].y;
+                                const dist = Math.hypot(dx, dy);
+                                if (dist < 60) {
+                                    ctx3d.globalAlpha = (1 - dist / 60) * 0.22 * proj[i].a;
+                                    ctx3d.beginPath();
+                                    ctx3d.moveTo(proj[i].x, proj[i].y);
+                                    ctx3d.lineTo(proj[j].x, proj[j].y);
+                                    ctx3d.stroke();
+                                }
+                            }
+                        }
+                        ctx3d.globalAlpha = 1;
+                    }
+                    renderBg();
+
+                    let lastResizeW = window.innerWidth;
+                    window.addEventListener('resize', () => {
+                        if (Math.abs(window.innerWidth - lastResizeW) > 40) {
+                            lastResizeW = window.innerWidth;
+                            w = bgCanvas.width = window.innerWidth;
+                            h = bgCanvas.height = window.innerHeight;
+                        }
+                    });
+                }
+
+                /* ----------------------------------------------------
+                   9. Кнопки стека (Skills)
+                ---------------------------------------------------- */
+                document.querySelectorAll('.skill-node').forEach(node => {
+                    node.onclick = function() {
+                        getAudio();
+                        feedback(950, 0.04, 15);
+                        document.querySelectorAll('.skill-node').forEach(s => s.classList.remove('active-skill'));
+                        this.classList.add('active-skill');
+                        const skillName = this.getAttribute('data-skill') || this.innerText;
+                        runCommand('skills');
+                        if (termLog) {
+                            termLog.innerHTML += `<p style="color:var(--accent-cyan);">> Выбран стек: ${skillName}</p>`;
+                            termLog.scrollTop = termLog.scrollHeight;
+                        }
+                    };
+                });
+
+                // Escape закрывает модалку узла
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'Escape') closeNodeModal();
+                });
+            }
+
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', startApp);
+            } else {
+                startApp();
+            }
+        })();
+    </script>
+</body>
+</html>
