@@ -928,7 +928,10 @@
         }
 
         .skill-node {
-            padding: 9px 15px;
+            padding: 10px 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
             border-radius: 10px;
             background: rgba(13, 19, 33, 0.9);
             border: 1px solid rgba(255, 255, 255, 0.12);
@@ -939,7 +942,12 @@
             user-select: none;
             transition: all 0.2s;
             touch-action: manipulation;
+            text-align: left;
         }
+        .skill-name { display:block; font-weight:700; color:var(--text); }
+        .skill-role { display:block; font-size:.62rem; color:var(--text-muted); letter-spacing:.03em; }
+        .skill-node.active-skill .skill-name { color:var(--accent); }
+        .skill-node.active-skill .skill-role { color:var(--accent-cyan); }
         .skill-node:active, .skill-node.active-skill {
             border-color: var(--accent);
             color: var(--accent);
@@ -1055,6 +1063,24 @@
             user-select: none;
             touch-action: manipulation;
         }
+    /* ===== PREMIUM UPGRADE ===== */
+:root{--radius-lg:22px;--radius-md:16px;--shadow:0 22px 70px rgba(0,0,0,.42)}
+html{scroll-padding-top:88px} body{background:radial-gradient(circle at 15% 5%,rgba(var(--accent-rgb),.07),transparent 28%),radial-gradient(circle at 85% 25%,rgba(0,229,255,.045),transparent 24%),var(--bg)} body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:1;background:radial-gradient(circle at center,transparent 35%,rgba(0,0,0,.22) 100%)}
+.container{max-width:1240px;padding:16px 18px 90px} header{position:sticky;top:12px;z-index:50;box-shadow:0 14px 45px rgba(0,0,0,.28);border-color:rgba(255,255,255,.13)} .logo{letter-spacing:.2px}.logo span{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border:1px solid var(--accent);border-radius:8px;background:rgba(var(--accent-rgb),.09)} .header-tools{margin-left:auto}.tool-btn{min-height:38px}.nav-links{order:3;width:auto;margin-left:auto}.nav-links a{padding:8px 11px}
+.hero{min-height:calc(100vh - 110px);grid-template-columns:1.08fr .92fr;gap:42px;margin-bottom:70px}.hero-left{display:flex;flex-direction:column;justify-content:center}.status-badge{box-shadow:0 0 30px rgba(var(--accent-rgb),.08)} .hero-title{font-size:clamp(2.35rem,6vw,5.2rem);letter-spacing:-.055em;max-width:900px;text-wrap:balance}.hero-desc{max-width:720px;font-size:clamp(.9rem,1.4vw,1rem)} .hero-actions{margin-top:4px}.hero-btn{min-height:44px;padding:11px 17px}.hero-btn-primary{box-shadow:0 0 28px rgba(var(--accent-rgb),.18)} .hero-extra-actions{margin-top:16px}.mini-action{min-height:36px}
+.hero-metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:24px;max-width:680px}.metric-card{padding:13px 14px;border:1px solid var(--card-border);border-radius:14px;background:rgba(255,255,255,.035);backdrop-filter:blur(8px)} .metric-value{font-family:var(--mono);font-size:1.05rem;color:var(--accent);font-weight:700}.metric-label{display:block;color:var(--text-muted);font-family:var(--mono);font-size:.66rem;margin-top:5px}
+.terminal-box{border-radius:20px;padding:16px;box-shadow:var(--shadow),inset 0 1px 0 rgba(255,255,255,.05);align-self:center;width:100%}.terminal-screen{min-height:190px;max-height:260px}.terminal-input-bar{min-height:40px}.section-header{margin-bottom:20px}.section-title{font-size:clamp(1.5rem,3vw,2rem);letter-spacing:-.03em}.about-card,.lab-container{border-radius:var(--radius-lg);box-shadow:var(--shadow)}.about-card{padding:20px}.about-grid{grid-template-columns:minmax(280px,.72fr) minmax(0,1.28fr)}.cyber-id-badge{border-radius:18px;min-height:100%}
+.projects-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}.flip-container{min-height:420px}.flip-front,.flip-back{border-radius:18px;padding:20px;box-shadow:inset 0 1px 0 rgba(255,255,255,.035)}.flip-front{background:linear-gradient(145deg,rgba(18,27,44,.96),rgba(9,14,25,.96))}.flip-back{background:linear-gradient(145deg,rgba(11,20,31,.98),rgba(8,12,22,.98))}.project-title{font-size:1.3rem;letter-spacing:-.025em}.project-summary{font-size:.88rem}.pill{padding:5px 8px;border-radius:7px}.project-number{font-family:var(--mono);font-size:.66rem;color:var(--text-muted);letter-spacing:.08em}.project-status{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:.66rem;color:var(--accent-cyan)}.project-status::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor;box-shadow:0 0 9px currentColor}.project-card-top{display:flex;justify-content:space-between;gap:8px;align-items:center;margin-bottom:14px}.project-actions{display:flex;gap:7px;flex-wrap:wrap}.btn-more{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.13);color:var(--text-main);padding:7px 10px;border-radius:7px;font:inherit;font-family:var(--mono);font-size:.7rem;cursor:pointer}.planned-card .flip-front{background:linear-gradient(145deg,rgba(var(--accent-rgb),.045),rgba(9,14,25,.96))}.future-badge{display:inline-flex;padding:4px 7px;border-radius:6px;background:rgba(192,132,252,.1);border:1px solid rgba(192,132,252,.3);color:#d8b4fe;font:600 .62rem var(--mono);text-transform:uppercase}
+.roadmap-section{margin-bottom:56px}.roadmap{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.roadmap-item{padding:16px;border:1px solid var(--card-border);background:rgba(255,255,255,.03);border-radius:16px}.roadmap-step{font:700 .68rem var(--mono);color:var(--accent)}.roadmap-item h3{margin:8px 0 5px;font-size:1rem}.roadmap-item p{font-size:.76rem;line-height:1.5;color:var(--text-muted)}
+.skills-wrap{display:grid;grid-template-columns:1fr .7fr;gap:18px;align-items:stretch}.skills-grid{justify-content:flex-start;align-content:start;padding:18px;border:1px solid var(--card-border);border-radius:18px;background:rgba(255,255,255,.025)}.skill-node{padding:10px 13px}.skill-panel{border:1px solid var(--card-border);border-radius:18px;padding:18px;background:rgba(255,255,255,.025)}.skill-panel h3{font-size:1rem;margin-bottom:6px}.skill-panel p{font-size:.8rem;color:var(--text-muted);line-height:1.55}.skill-bars{display:grid;gap:10px;margin-top:14px}.skill-bar-row{display:grid;grid-template-columns:100px 1fr 38px;gap:8px;align-items:center;font:.67rem var(--mono);color:var(--text-muted)}.skill-bar{height:6px;border-radius:10px;background:rgba(255,255,255,.08);overflow:hidden}.skill-bar i{display:block;height:100%;width:var(--w);background:linear-gradient(90deg,var(--accent),var(--accent-cyan));box-shadow:0 0 12px var(--accent-glow)}
+.lab-container{padding:16px}.lab-canvas{height:340px!important}.contact-section{margin-bottom:20px}.contact-card{display:grid;grid-template-columns:1fr auto;gap:20px;align-items:center;padding:24px;border:1px solid var(--card-border);border-radius:22px;background:linear-gradient(135deg,rgba(var(--accent-rgb),.07),rgba(255,255,255,.025));box-shadow:var(--shadow)}.contact-card h2{font-size:clamp(1.5rem,3vw,2.2rem);margin-bottom:7px}.contact-card p{color:var(--text-muted);font-family:var(--mono);font-size:.78rem;line-height:1.55}.contact-links{display:flex;gap:8px;flex-wrap:wrap}.contact-link{display:inline-flex;align-items:center;gap:7px;padding:10px 13px;border-radius:9px;border:1px solid var(--card-border);color:var(--text-main);text-decoration:none;font:.72rem var(--mono);background:rgba(255,255,255,.035);cursor:pointer}.contact-link:hover{border-color:var(--accent);color:var(--accent)}footer{padding:22px 4px 0;color:var(--text-muted);font:.68rem var(--mono);display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}.footer-accent{color:var(--accent)}
+.command-palette{position:fixed;inset:0;z-index:10000;display:none;align-items:flex-start;justify-content:center;padding:12vh 16px;background:rgba(0,0,0,.72);backdrop-filter:blur(12px)}.command-palette.active{display:flex}.palette-box{width:min(650px,100%);background:#0b1120;border:1px solid var(--accent);border-radius:18px;box-shadow:0 30px 100px rgba(0,0,0,.7);overflow:hidden}.palette-input{width:100%;border:0;border-bottom:1px solid rgba(255,255,255,.1);background:transparent;color:#fff;padding:16px;font:.9rem var(--mono);outline:none}.palette-list{max-height:330px;overflow:auto;padding:8px}.palette-item{width:100%;text-align:left;background:transparent;border:0;color:var(--text-main);padding:11px 12px;border-radius:9px;font:.76rem var(--mono);cursor:pointer}.palette-item:hover,.palette-item.active{background:rgba(var(--accent-rgb),.12);color:var(--accent)}.toast{position:fixed;left:50%;bottom:22px;transform:translate(-50%,20px);z-index:11000;background:#0c1423;border:1px solid var(--accent);color:var(--text-main);padding:10px 14px;border-radius:10px;font:.72rem var(--mono);opacity:0;pointer-events:none;transition:.25s;box-shadow:0 12px 40px rgba(0,0,0,.5)}.toast.show{opacity:1;transform:translate(-50%,0)}.modal-content{border-radius:20px}.modal-overlay{padding:12px}.modal-content{max-height:90dvh}
+@media(max-width:980px){.hero{grid-template-columns:1fr;min-height:auto}.terminal-box{max-width:760px;margin:auto}.projects-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.roadmap{grid-template-columns:repeat(2,1fr)}.skills-wrap{grid-template-columns:1fr}.nav-links{margin-left:0}}
+@media(max-width:700px){.container{padding:10px 11px 60px}.hero{gap:22px;margin-bottom:48px}.hero-title{font-size:clamp(2.15rem,12vw,3.4rem);letter-spacing:-.06em}.hero-desc{font-size:.8rem;line-height:1.6}.hero-actions{display:grid;grid-template-columns:1fr 1fr}.hero-btn{justify-content:center;padding:10px 9px;font-size:.72rem}.hero-extra-actions{display:grid;grid-template-columns:1fr 1fr}.mini-action{width:100%}.hero-metrics{gap:7px}.metric-card{padding:11px 8px}.metric-value{font-size:.88rem}.metric-label{font-size:.58rem}header{top:6px;padding:10px;border-radius:13px}.logo{font-size:.82rem}.header-tools{gap:5px}.tool-btn{padding:7px 9px;font-size:.64rem}.nav-links{order:4;width:100%;margin:0;gap:4px}.nav-links a{font-size:.68rem;padding:7px 9px}.about-card{padding:12px}.about-grid{grid-template-columns:1fr;gap:12px}.cyber-id-badge{padding:14px}.about-tabs-nav{margin-bottom:11px}.atab-btn{font-size:.68rem;padding:7px 9px}.atab-content{font-size:.78rem}.section-header{gap:10px}.section-title{font-size:1.3rem}.section-header>div{width:100%}.project-filters{width:calc(100vw - 22px);margin-right:-5px}.projects-grid{grid-template-columns:1fr;gap:14px}.flip-container{min-height:395px}.flip-front,.flip-back{padding:16px}.project-title{font-size:1.16rem}.project-summary{font-size:.79rem}.card-actions{gap:8px;align-items:flex-start}.card-actions>span{max-width:48%}.btn-inspect{font-size:.68rem;padding:7px 9px}.roadmap{grid-template-columns:1fr}.roadmap-item{padding:13px}.lab-container{padding:9px}.lab-canvas{height:245px!important}.lab-controls{display:grid;grid-template-columns:1fr 1fr}.lab-btn{width:100%;min-height:38px}.lab-instructions{font-size:.58rem}.skills-grid{padding:12px;gap:6px}.skill-node{font-size:.7rem;padding:8px 10px}.skill-role{font-size:.54rem}.skill-panel{padding:14px}.skill-bar-row{grid-template-columns:82px 1fr 32px;font-size:.6rem}.contact-card{grid-template-columns:1fr;padding:18px}.contact-links{display:grid;grid-template-columns:1fr 1fr}.contact-link{justify-content:center}.terminal-screen{min-height:155px;max-height:210px;font-size:.72rem}.terminal-box{padding:11px;border-radius:15px}.terminal-input{font-size:.74rem}.quick-chips{padding-top:7px}footer{font-size:.58rem}.modal-content{padding:18px 14px}.node-stat-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:390px){.hero-actions,.hero-extra-actions{grid-template-columns:1fr}.hero-metrics{grid-template-columns:1fr 1fr}.hero-metrics .metric-card:last-child{grid-column:1/-1}.contact-links{grid-template-columns:1fr}.logo{font-size:.76rem}.header-tools .tool-btn{padding:6px 7px}}
+@media(hover:hover){.tool-btn:hover,.mini-action:hover,.lab-btn:hover,.btn-inspect:hover,.btn-more:hover{border-color:var(--accent);color:var(--accent);background:rgba(var(--accent-rgb),.09);transform:translateY(-1px)}.flip-container:hover{transform:translateY(-2px);transition:transform .25s}.metric-card:hover,.roadmap-item:hover{border-color:var(--card-hover-border);transform:translateY(-2px);transition:.2s}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}.flip-inner{transition:none!important}}
+
     </style>
 </head>
 <body>
@@ -1077,7 +1103,7 @@
                 <li><a href="#about">> 00. Обо мне</a></li>
                 <li><a href="#projects">> 01. Проекты</a></li>
                 <li><a href="#lab">> 02. 3D Лаборатория</a></li>
-                <li><a href="#skills">> 03. Стек</a></li>
+                <li><a href="#skills">> 03. Стек</a></li><li><a href="#roadmap">> Roadmap</a></li><li><a href="#contact">> Contact</a></li>
             </ul>
         </header>
 
@@ -1098,6 +1124,7 @@
                     <button class="mini-action" id="btn-focus-terminal">⌘ Терминал</button>
                     <button class="mini-action" id="btn-go-lab">◉ Лаборатория узлов</button>
                 </div>
+                <div class="hero-metrics"><div class="metric-card"><span class="metric-value" data-counter="8">8</span><span class="metric-label">PROJECT TRACKS</span></div><div class="metric-card"><span class="metric-value" data-counter="2">2</span><span class="metric-label">ACTIVE BUILDS</span></div><div class="metric-card"><span class="metric-value">∞</span><span class="metric-label">ROOM TO GROW</span></div></div>
             </div>
 
             <!-- Терминал -->
@@ -1233,144 +1260,19 @@
             </div>
         </section>
 
-        <!-- Проекты (3D FLIP КАРТОЧКИ) -->
-        <section class="projects-section" id="projects">
-            <div class="section-header">
-                <div>
-                    <h2 class="section-title"><span>01.</span> Реализованные Проекты</h2>
-                    <p style="color: var(--text-muted); font-family: var(--mono); font-size: 0.78rem; margin-top: 4px;">
-                        Нажмите кнопку «Детали &amp; Скрины», чтобы перевернуть 3D-карточку и запустить диагностику
-                    </p>
-                </div>
-                <div class="project-filters">
-                    <button class="filter-btn active" data-filter="all">Все [3]</button>
-                    <button class="filter-btn" data-filter="apps">Flutter &amp; Apps</button>
-                    <button class="filter-btn" data-filter="web">Web &amp; UI</button>
-                </div>
-            </div>
+        <!-- Проекты -->
+        <section class="projects-section" id="projects"><div class="section-header"><div><h2 class="section-title"><span>01.</span> Проекты // Portfolio</h2><p style="color:var(--text-muted);font-family:var(--mono);font-size:.78rem;margin-top:4px">Реальные проекты + идеи, которые можно превратить в сильные GitHub-кейсы вместе.</p></div><div class="project-filters"><button class="filter-btn active" data-filter="all">Все [8]</button><button class="filter-btn" data-filter="apps">Apps</button><button class="filter-btn" data-filter="web">Web</button><button class="filter-btn" data-filter="cpp">C++ / Algo</button><button class="filter-btn" data-filter="planned">Future</button></div></div><div class="projects-grid" id="projects-container">
+<div class="flip-container" data-category="apps" data-project-name="Love Story App"><div class="flip-inner"><div class="flip-front"><div><div class="project-card-top"><span class="project-number">01 / REAL</span><span class="project-status">Active Dev</span></div><span class="project-tag">Flutter / Personal App</span><h3 class="project-title">Love Story App</h3><p class="project-summary">Персональная интерактивная история для двоих — реальные места и даты превращаются в уровни, воспоминания, фотографии, сообщения и мини-игры.</p><div class="tech-pill-row"><span class="pill">Flutter</span><span class="pill">Dart</span><span class="pill">GoRouter</span><span class="pill">UI/UX</span></div></div><div class="card-actions"><span class="project-status">In progress</span><div class="project-actions"><button class="btn-more btn-project-more">Case study</button><button class="btn-inspect btn-flip-trigger">Детали →</button></div></div></div><div class="flip-back"><div><h3 class="project-title">Love Story // What I build</h3><div class="mock-screenshot"><span class="mock-text">[ FLUTTER_APP / STORY_MAP ]</span></div><div class="bench-box" id="bench-log-1">> Карта отношений и памятных мест<br>> Система уровней и разблокировки<br>> Фотографии, даты и скрытые сообщения<br>> Мини-игры как часть истории</div><button class="btn-card-test" data-target-log="bench-log-1" data-bench="Love Story: UI + navigation + story modules">Проверить концепт</button></div><div class="card-actions"><button class="btn-inspect btn-flip-back" style="width:100%;text-align:center;">← Назад</button></div></div></div></div>
+<div class="flip-container" data-category="apps" data-project-name="LinguaFlow"><div class="flip-inner"><div class="flip-front"><div><div class="project-card-top"><span class="project-number">02 / REAL</span><span class="project-status">Building</span></div><span class="project-tag">Flutter / Education</span><h3 class="project-title">LinguaFlow</h3><p class="project-summary">Мобильное приложение для изучения слов: карточки, упражнения, тренировка памяти и понятный прогресс пользователя.</p><div class="tech-pill-row"><span class="pill">Flutter</span><span class="pill">Dart</span><span class="pill">GoRouter</span><span class="pill">UI/UX</span></div></div><div class="card-actions"><span class="project-status">Education</span><div class="project-actions"><button class="btn-more btn-project-more">Case study</button><button class="btn-inspect btn-flip-trigger">Детали →</button></div></div></div><div class="flip-back"><div><h3 class="project-title">LinguaFlow // What I build</h3><div class="mock-screenshot"><span class="mock-text">[ FLUTTER / VOCABULARY ]</span></div><div class="bench-box" id="bench-log-2">> Карточки для новой лексики<br>> Упражнения на запоминание<br>> Навигация между модулями<br>> Основа для системы прогресса</div><button class="btn-card-test" data-target-log="bench-log-2" data-bench="LinguaFlow: screens + routing + learning flow">Проверить концепт</button></div><div class="card-actions"><button class="btn-inspect btn-flip-back" style="width:100%;text-align:center;">← Назад</button></div></div></div></div>
+<div class="flip-container" data-category="web" data-project-name="Tanya Forest Flowers"><div class="flip-inner"><div class="flip-front"><div><div class="project-card-top"><span class="project-number">03 / REAL</span><span class="project-status">Live</span></div><span class="project-tag">Web / Landing Page</span><h3 class="project-title">Tanya Forest Flowers</h3><p class="project-summary">Веб-лендинг цветочного проекта с акцентом на визуальную подачу, понятную структуру каталога и удобный путь к заказу.</p><div class="tech-pill-row"><span class="pill">HTML5</span><span class="pill">CSS3</span><span class="pill">JavaScript</span><span class="pill">Responsive</span></div></div><div class="card-actions"><span class="project-status">Web</span><div class="project-actions"><button class="btn-more btn-project-more">Case study</button><button class="btn-inspect btn-flip-trigger">Детали →</button></div></div></div><div class="flip-back"><div><h3 class="project-title">Tanya Forest Flowers // What I build</h3><div class="mock-screenshot"><span class="mock-text">[ WEB / FLOWERS_LANDING ]</span></div><div class="bench-box" id="bench-log-3">> Визуальный первый экран<br>> Каталог и структура предложения<br>> Адаптация под разные экраны<br>> Интерактивные элементы страницы</div><button class="btn-card-test" data-target-log="bench-log-3" data-bench="Flowers: layout + interaction + responsive UI">Проверить концепт</button></div><div class="card-actions"><button class="btn-inspect btn-flip-back" style="width:100%;text-align:center;">← Назад</button></div></div></div></div>
+<div class="flip-container planned-card" data-category="cpp planned" data-project-name="Algorithm Visualizer"><div class="flip-inner"><div class="flip-front"><div><div class="project-card-top"><span class="project-number">04 / FUTURE</span><span class="future-badge">planned</span></div><span class="project-tag">C++ / Algorithms / Visualizer</span><h3 class="project-title">Algorithm Visualizer</h3><p class="project-summary">Проект для превращения алгоритмов в понятную визуальную лабораторию: графы, пути, сортировки и структуры данных.</p><div class="tech-pill-row"><span class="pill">C++</span><span class="pill">Algorithms</span><span class="pill">Graphs</span><span class="pill">Visualizer</span></div></div><div class="card-actions"><span class="project-status">planned</span><div class="project-actions"><button class="btn-more btn-project-more">Идея</button><button class="btn-inspect btn-flip-trigger">Детали →</button></div></div></div><div class="flip-back"><div><h3 class="project-title">Algorithm Visualizer // Concept</h3><div class="mock-screenshot"><span class="mock-text">[ BFS / DFS / DIJKSTRA / SORT ]</span></div><div class="bench-box" id="bench-log-4">> Пошаговое выполнение алгоритма<br>> Визуализация графов и путей<br>> Сравнение алгоритмов<br>> Генерация собственных тестов</div></div><div class="card-actions"><button class="btn-inspect btn-flip-back" style="width:100%;text-align:center;">← Назад</button></div></div></div></div>
+<!--<div class="flip-container planned-card" data-category="apps planned" data-project-name="BSUIR UniHub"><div class="flip-inner"><div class="flip-front"><div><div class="project-card-top"><span class="project-number">05 / FUTURE</span><span class="future-badge">planned</span></div><span class="project-tag">Flutter / University</span><h3 class="project-title">BSUIR UniHub</h3><p class="project-summary">Будущее студенческое приложение: расписание, дедлайны, учебные материалы, заметки и полезные инструменты в одном месте.</p><div class="tech-pill-row"><span class="pill">Flutter</span><span class="pill">Dart</span><span class="pill">Offline</span><span class="pill">API</span></div></div><div class="card-actions"><span class="project-status">planned</span><div class="project-actions"><button class="btn-more btn-project-more">Идея</button><button class="btn-inspect btn-flip-trigger">Детали →</button></div></div></div><div class="flip-back"><div><h3 class="project-title">BSUIR UniHub // Concept</h3><div class="mock-screenshot"><span class="mock-text">[ CAMPUS / SCHEDULE / TASKS ]</span></div><div class="bench-box" id="bench-log-5">> Расписание и дедлайны<br>> Учебные заметки и материалы<br>> Персональный экран студента<br>> Offline-first сценарии</div></div><div class="card-actions"><button class="btn-inspect btn-flip-back" style="width:100%;text-align:center;">← Назад</button></div></div></div></div>-->
+<div class="flip-container planned-card" data-category="web planned" data-project-name="Developer Dashboard"><div class="flip-inner"><div class="flip-front"><div><div class="project-card-top"><span class="project-number">06 / FUTURE</span><span class="future-badge">planned</span></div><span class="project-tag">Web / Analytics / API</span><h3 class="project-title">Developer Dashboard</h3><p class="project-summary">Личная web-панель разработчика, которая собирает проекты и GitHub-активность в один понятный экран.</p><div class="tech-pill-row"><span class="pill">JavaScript</span><span class="pill">REST API</span><span class="pill">Charts</span><span class="pill">GitHub</span></div></div><div class="card-actions"><span class="project-status">planned</span><div class="project-actions"><button class="btn-more btn-project-more">Идея</button><button class="btn-inspect btn-flip-trigger">Детали →</button></div></div></div><div class="flip-back"><div><h3 class="project-title">Developer Dashboard // Concept</h3><div class="mock-screenshot"><span class="mock-text">[ GITHUB / ANALYTICS ]</span></div><div class="bench-box" id="bench-log-6">> GitHub-активность и проекты<br>> Языки и статистика репозиториев<br>> Цели и прогресс обучения<br>> Визуальная аналитика</div></div><div class="card-actions"><button class="btn-inspect btn-flip-back" style="width:100%;text-align:center;">← Назад</button></div></div></div></div>
+<div class="flip-container planned-card" data-category="cpp planned" data-project-name="C++ Performance Lab"><div class="flip-inner"><div class="flip-front"><div><div class="project-card-top"><span class="project-number">07 / FUTURE</span><span class="future-badge">planned</span></div><span class="project-tag">C++ / Systems / Benchmark</span><h3 class="project-title">C++ Performance Lab</h3><p class="project-summary">Экспериментальный проект о том, что происходит с программой на уровне памяти, кэша, потоков и производительности.</p><div class="tech-pill-row"><span class="pill">C++20</span><span class="pill">Threads</span><span class="pill">Benchmark</span><span class="pill">Systems</span></div></div><div class="card-actions"><span class="project-status">planned</span><div class="project-actions"><button class="btn-more btn-project-more">Идея</button><button class="btn-inspect btn-flip-trigger">Детали →</button></div></div></div><div class="flip-back"><div><h3 class="project-title">C++ Performance Lab // Concept</h3><div class="mock-screenshot"><span class="mock-text">[ MEMORY / CACHE / THREADS ]</span></div><div class="bench-box" id="bench-log-7">> Измерение времени выполнения<br>> Эксперименты с памятью и кэшем<br>> Сравнение однопоточных и многопоточных решений<br>> Документирование результатов</div></div><div class="card-actions"><button class="btn-inspect btn-flip-back" style="width:100%;text-align:center;">← Назад</button></div></div></div></div>
+<!--<div class="flip-container planned-card" data-category="apps web planned" data-project-name="Minsk Smart Route"><div class="flip-inner"><div class="flip-front"><div><div class="project-card-top"><span class="project-number">08 / FUTURE</span><span class="future-badge">planned</span></div><span class="project-tag">Flutter / Maps / Utility</span><h3 class="project-title">Minsk Smart Route</h3><p class="project-summary">Учебный map-проект о городских маршрутах: места, точки интереса, сохранённые локации и удобный поиск пути.</p><div class="tech-pill-row"><span class="pill">Flutter</span><span class="pill">Maps</span><span class="pill">Routing</span><span class="pill">UX</span></div></div><div class="card-actions"><span class="project-status">planned</span><div class="project-actions"><button class="btn-more btn-project-more">Идея</button><button class="btn-inspect btn-flip-trigger">Детали →</button></div></div></div><div class="flip-back"><div><h3 class="project-title">Minsk Smart Route // Concept</h3><div class="mock-screenshot"><span class="mock-text">[ MAP / ROUTE / POI ]</span></div><div class="bench-box" id="bench-log-8">> Поиск и отображение мест<br>> Сохранённые точки на карте<br>> Построение маршрута<br>> Удобный сценарий для телефона</div></div><div class="card-actions"><button class="btn-inspect btn-flip-back" style="width:100%;text-align:center;">← Назад</button></div></div></div></div>-->
+</div></section>
 
-            <div class="projects-grid" id="projects-container">
-                
-                <!-- Проект 1: Love Story App -->
-                <div class="flip-container" data-category="apps">
-                    <div class="flip-inner">
-                        <div class="flip-front">
-                            <div>
-                                <span class="project-tag">Flutter / Personal App</span>
-                                <h3 class="project-title">Love Story App</h3>
-                                <p class="project-summary">Персональное интерактивное приложение для двоих: совместная карта свиданий, памятные даты, фотографии, секретные послания и мини-игры.</p>
-                                <div class="tech-pill-row">
-                                    <span class="pill">Flutter</span>
-                                    <span class="pill">Dart</span>
-                                    <span class="pill">GoRouter</span>
-                                    <span class="pill">UI/UX</span>
-                                </div>
-                            </div>
-                            <div class="card-actions">
-                                <span style="font-family: var(--mono); font-size: 0.72rem; color: var(--accent-cyan);">● In Active Dev</span>
-                                <button class="btn-inspect btn-flip-trigger">Детали &amp; Скрины &rarr;</button>
-                            </div>
-                        </div>
-                        <div class="flip-back">
-                            <div>
-                                <h3 class="project-title" style="margin-bottom: 6px;">Love Story // Preview</h3>
-                                <div class="mock-screenshot">
-                                    <span class="mock-text">[ FLUTTER_APP_MAP ]</span>
-                                </div>
-                                <div class="bench-box" id="bench-log-1">
-                                    > Платформы: Android + iOS<br>
-                                    > Архитектура: Clean / Widgets<br>
-                                    > Статус: 60 FPS плавность
-                                </div>
-                                <button class="btn-card-test" data-target-log="bench-log-1" data-bench="Animations: 60 FPS | Local storage: Hive | Clean navigation">Запустить Тест Модулей</button>
-                            </div>
-                            <div class="card-actions">
-                                <button class="btn-inspect btn-flip-back" style="width:100%; text-align:center;">&larr; Назад к описанию</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Проект 2: LinguaFlow -->
-                <div class="flip-container" data-category="apps">
-                    <div class="flip-inner">
-                        <div class="flip-front">
-                            <div>
-                                <span class="project-tag">Flutter / Education</span>
-                                <h3 class="project-title">LinguaFlow</h3>
-                                <p class="project-summary">Приложение для изучения лексики и языковой практики. Удобная структура карточек, тренировка памяти и кастомные упражнения.</p>
-                                <div class="tech-pill-row">
-                                    <span class="pill">Flutter</span>
-                                    <span class="pill">Dart</span>
-                                    <span class="pill">State Management</span>
-                                </div>
-                            </div>
-                            <div class="card-actions">
-                                <span style="font-family: var(--mono); font-size: 0.72rem; color: var(--accent-cyan);">● Education Core</span>
-                                <button class="btn-inspect btn-flip-trigger">Детали &amp; Скрины &rarr;</button>
-                            </div>
-                        </div>
-                        <div class="flip-back">
-                            <div>
-                                <h3 class="project-title" style="margin-bottom: 6px;">LinguaFlow // Stats</h3>
-                                <div class="mock-screenshot">
-                                    <span class="mock-text">[ VOCABULARY_MODULE ]</span>
-                                </div>
-                                <div class="bench-box" id="bench-log-2">
-                                    > Карточки: динамический список<br>
-                                    > Интерфейс: адаптивный UI<br>
-                                    > Упражнения: интерактив
-                                </div>
-                                <button class="btn-card-test" data-target-log="bench-log-2" data-bench="State sync: OK | Custom painter UI: 60 FPS | Zero lags">Запустить Тест Карточек</button>
-                            </div>
-                            <div class="card-actions">
-                                <button class="btn-inspect btn-flip-back" style="width:100%; text-align:center;">&larr; Назад к описанию</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Проект 3: Landing page for tanya_forest_flowers -->
-                <div class="flip-container" data-category="web">
-                    <div class="flip-inner">
-                        <div class="flip-front">
-                            <div>
-                                <span class="project-tag">Web / Landing Page</span>
-                                <h3 class="project-title">tanya_forest_flowers</h3>
-                                <p class="project-summary">Стильный посадочный лендинг для цветочного проекта с галереей композиций, адаптивной версткой, каталогом и быстрой формой заказа.</p>
-                                <div class="tech-pill-row">
-                                    <span class="pill">HTML5</span>
-                                    <span class="pill">CSS3 / Flexbox</span>
-                                    <span class="pill">JavaScript</span>
-                                </div>
-                            </div>
-                            <div class="card-actions">
-                                <span style="font-family: var(--mono); font-size: 0.72rem; color: var(--accent-cyan);">● Live Landing</span>
-                                <button class="btn-inspect btn-flip-trigger">Детали &amp; Скрины &rarr;</button>
-                            </div>
-                        </div>
-                        <div class="flip-back">
-                            <div>
-                                <h3 class="project-title" style="margin-bottom: 6px;">TanyaFlowers // UI</h3>
-                                <div class="mock-screenshot">
-                                    <span class="mock-text">[ FLOWERS_LANDING_PREVIEW ]</span>
-                                </div>
-                                <div class="bench-box" id="bench-log-3">
-                                    > Адаптивность: 320px - 4K<br>
-                                    > Скорость загрузки: 99/100<br>
-                                    > Анимация каталога и модалок
-                                </div>
-                                <button class="btn-card-test" data-target-log="bench-log-3" data-bench="Lighthouse Performance: 99 | Mobile friendly: 100% | Flexbox layout">Проверить Верстку</button>
-                            </div>
-                            <div class="card-actions">
-                                <button class="btn-inspect btn-flip-back" style="width:100%; text-align:center;">&larr; Назад к описанию</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </section>
+        <section class="roadmap-section" id="roadmap"><div class="section-header"><div><h2 class="section-title"><span>01.5</span> Roadmap // Что строим дальше</h2><p style="color:var(--text-muted);font-family:var(--mono);font-size:.78rem;margin-top:4px">Портфолио должно расти вместе с навыками, а не выглядеть как список выдуманных проектов.</p></div></div><div class="roadmap"><div class="roadmap-item"><span class="roadmap-step">01 / NOW</span><h3>Flutter Foundation</h3><p>Доводим Love Story и LinguaFlow до аккуратного MVP, GitHub и нормальной архитектуры.</p></div><div class="roadmap-item"><span class="roadmap-step">02 / NEXT</span><h3>C++ Algorithm Lab</h3><p>Создаём сильный алгоритмический проект с визуализацией и тестами.</p></div><div class="roadmap-item"><span class="roadmap-step">03 / SYSTEMS</span><h3>Performance Lab</h3><p>Эксперименты с памятью, потоками и производительностью — ближе к systems dev.</p></div><div class="roadmap-item"><span class="roadmap-step">04 / PRODUCT</span><h3>UniHub</h3><p>Берём реальную студенческую проблему и превращаем её в полноценный продукт.</p></div></div></section>
 
         <!-- 3D Лаборатория Узлов -->
         <section class="lab-section" id="lab">
@@ -1390,7 +1292,7 @@
             </div>
 
             <div class="lab-container">
-                <canvas id="lab-canvas"></canvas>
+                <canvas id="lab-canvas" class="lab-canvas"></canvas>
                 <div class="lab-instructions">
                     <span>STATUS: MAGNETIC FIELD ACTIVE</span>
                     <span id="lab-node-count">АКТИВНО: 28 УЗЛОВ</span>
@@ -1399,27 +1301,11 @@
         </section>
 
         <!-- Стек навыков -->
-        <section class="skills-section" id="skills">
-            <div class="section-header">
-                <div>
-                    <h2 class="section-title"><span>03.</span> Технологический Стек</h2>
-                    <p style="color: var(--text-muted); font-family: var(--mono); font-size: 0.78rem; margin-top: 4px;">
-                        Нажмите на навык: он подсветится и выведет команду в терминал
-                    </p>
-                </div>
-            </div>
-            <div class="skills-grid" id="skills-container">
-                <div class="skill-node" data-skill="C++20">C++20 / STL / OOP</div>
-                <div class="skill-node" data-skill="Flutter / Dart">Flutter / Dart</div>
-                <div class="skill-node" data-skill="Algorithms">Algorithms &amp; Data Structures</div>
-                <div class="skill-node" data-skill="HTML / CSS / JS">HTML / CSS / JavaScript</div>
-                <div class="skill-node" data-skill="Git / GitHub">Git / GitHub</div>
-                <div class="skill-node" data-skill="Figma / UI UX">Figma / UI / UX</div>
-                <div class="skill-node" data-skill="AutoCAD / Inventor">AutoCAD / Inventor</div>
-                <div class="skill-node" data-skill="Linux / Terminal">Linux / Terminal</div>
-            </div>
-        </section>
+        <section class="skills-section" id="skills"><div class="section-header"><div><h2 class="section-title"><span>03.</span> Технологический Стек</h2><p style="color:var(--text-muted);font-family:var(--mono);font-size:.78rem;margin-top:4px">Нажмите на технологию — справа появится её роль в стеке.</p></div></div><div class="skills-wrap"><div class="skills-grid" id="skills-container"><div class="skill-node" data-skill="C++20"><span class="skill-name">C++20 / STL / OOP</span><span class="skill-role">Competitive Programming &amp; Algorithms</span></div><div class="skill-node" data-skill="Flutter / Dart"><span class="skill-name">Flutter / Dart</span><span class="skill-role">Mobile Development / App Development</span></div><div class="skill-node" data-skill="Algorithms"><span class="skill-name">Algorithms &amp; Data Structures</span><span class="skill-role">Competitive Programming</span></div><div class="skill-node" data-skill="HTML / CSS / JS"><span class="skill-name">HTML / CSS / JavaScript</span><span class="skill-role">Web Development</span></div><div class="skill-node" data-skill="Git / GitHub"><span class="skill-name">Git / GitHub</span><span class="skill-role">Development Workflow</span></div><div class="skill-node" data-skill="Figma / UI UX"><span class="skill-name">Figma / UI / UX</span><span class="skill-role">Design &amp; Prototyping</span></div><div class="skill-node" data-skill="AutoCAD / Inventor"><span class="skill-name">AutoCAD / Inventor</span><span class="skill-role">Engineering Tools</span></div><div class="skill-node" data-skill="Linux / Terminal"><span class="skill-name">Linux / Terminal</span><span class="skill-role">Development Environment · Beginner</span></div><div class="skill-node" data-skill="Python"><span class="skill-name">Python</span><span class="skill-role">Programming · Beginner</span></div><div class="skill-node" data-skill="SQL"><span class="skill-name">SQL</span><span class="skill-role">Databases · Learning</span></div></div><div class="skill-panel" id="skill-panel"><h3 id="skill-panel-title">C++20 / STL / OOP</h3><p id="skill-panel-desc">Competitive Programming &amp; Algorithms — основной алгоритмический стек: олимпиадные задачи, STL, OOP и системное мышление.</p><div class="skill-bars"><div class="skill-bar-row"><span>CORE</span><div class="skill-bar"><i id="skill-core-bar" style="--w:72%"></i></div><b id="skill-core-value">72</b></div><div class="skill-bar-row"><span>PRACTICE</span><div class="skill-bar"><i id="skill-practice-bar" style="--w:75%"></i></div><b id="skill-practice-value">75</b></div><div class="skill-bar-row"><span>GROWTH</span><div class="skill-bar"><i id="skill-growth-bar" style="--w:77%"></i></div><b id="skill-growth-value">77</b></div></div></div></div></section>
+        <section class="contact-section" id="contact"><div class="contact-card"><div><h2>Есть идея для проекта?</h2><p>Портфолио здесь — не финал. Следующий сильный кейс можно спроектировать, написать, протестировать и оформить вместе.</p></div><div class="contact-links"><a class="contact-link" href="https://github.com/MaksSh2" target="_blank" rel="noopener noreferrer">↗ GitHub</a><a class="contact-link" href="https://t.me/mkslvv" target="_blank" rel="noopener noreferrer">↗ Telegram</a><a class="contact-link" href="mailto:mimaxlafon74@gmail.com">✉ Email</a><button class="contact-link" id="copy-email" type="button">⧉ Copy email</button></div></div></section>
     </div>
+
+    <div class="command-palette" id="command-palette"><div class="palette-box"><input class="palette-input" id="palette-input" placeholder="Search command or section…" autocomplete="off"><div class="palette-list" id="palette-list"></div></div></div><div class="toast" id="toast"></div>
 
     <!-- Модальное окно узла -->
     <div class="modal-overlay" id="node-modal-overlay">
@@ -2139,6 +2025,34 @@
                     };
                 });
 
+                /* 10. Premium interactions */
+                const projectInfo = {
+                    'Love Story App':'Реальный Flutter-проект для двоих: интерактивная карта, воспоминания, фотографии, скрытые сообщения, уровни и мини-игры. Сейчас активно развивается.',
+                    'LinguaFlow':'Реальный Flutter-проект для изучения языков: карточки, упражнения, тренировка памяти и будущая система прогресса.',
+                    'Tanya Forest Flowers':'Реальный web-кейс: лендинг цветочного проекта с визуальной подачей, структурой каталога и адаптивным интерфейсом.',
+                    'Algorithm Visualizer':'Будущий C++/Algorithms-проект: визуализация графов, сортировок, поиска пути и пошагового выполнения алгоритмов.',
+                    'BSUIR UniHub':'Будущий Flutter-продукт для студентов: расписание, дедлайны, материалы, заметки и персональные инструменты.',
+                    'Developer Dashboard':'Будущий web-кейс с GitHub API: проекты, активность, языки и визуальная статистика развития.',
+                    'C++ Performance Lab':'Будущий C++ systems-кейс: память, cache locality, threads, benchmark и разбор результатов.',
+                    'Minsk Smart Route':'Будущий Flutter map-кейс: точки интереса, сохранённые места, маршруты и удобный городской UX.'
+                };
+                const toast=document.getElementById('toast');
+                function showToast(text){if(!toast)return;toast.textContent=text;toast.classList.add('show');clearTimeout(window.__toastTimer);window.__toastTimer=setTimeout(()=>toast.classList.remove('show'),2400)}
+                document.querySelectorAll('.btn-project-more').forEach(btn=>btn.onclick=function(e){e.preventDefault();const name=this.closest('.flip-container')?.dataset.projectName||'Project';showToast(projectInfo[name]||'Проект можно расширить вместе.');feedback(980,.05,12)});
+                const copyEmail=document.getElementById('copy-email');if(copyEmail)copyEmail.onclick=async()=>{try{await navigator.clipboard.writeText('mimaxlafon74@gmail.com');showToast('Email скопирован')}catch(e){showToast('mimaxlafon74@gmail.com')}};
+                const skillData={'C++20':{desc:'Competitive Programming & Algorithms — сильная база после олимпиадного опыта: STL, OOP, решение задач и системное мышление.',scores:[72,75,77]},'Flutter / Dart':{desc:'Mobile Development / App Development — основной прикладной стек для Love Story и LinguaFlow.',scores:[65,70,90]},'Algorithms':{desc:'Competitive Programming — графы, структуры данных, сложность и практика решения олимпиадных задач.',scores:[78,73,84]},'HTML / CSS / JS':{desc:'Web Development — создание лендингов, интерфейсов и интерактивных web-страниц.',scores:[58,65,80]},'Git / GitHub':{desc:'Development Workflow — хранение проектов, история изменений, ветки и рабочий процесс разработки.',scores:[58,68,82]},'Figma / UI UX':{desc:'Design & Prototyping — проектирование экранов, композиция, состояния и визуальная система.',scores:[62,60,78]},'AutoCAD / Inventor':{desc:'Engineering Tools — инженерное моделирование и CAD-инструменты в рамках ИТ/университетских задач.',scores:[48,57,70]},'Linux / Terminal':{desc:'Development Environment · Beginner — командная строка, окружение разработки и первые шаги с Linux.',scores:[38,35,76]},'Python':{desc:'Programming · Beginner — знаком с Python и продолжаю развивать язык на практике.',scores:[42,32,78]},'SQL':{desc:'Databases · Learning — изучаю SQL и основы работы с реляционными базами данных.',scores:[25,18,88]}};
+                const panelTitle=document.getElementById('skill-panel-title'),panelDesc=document.getElementById('skill-panel-desc');
+                const coreBar=document.getElementById('skill-core-bar'),practiceBar=document.getElementById('skill-practice-bar'),growthBar=document.getElementById('skill-growth-bar');
+                const coreValue=document.getElementById('skill-core-value'),practiceValue=document.getElementById('skill-practice-value'),growthValue=document.getElementById('skill-growth-value');
+                function updateSkillPanel(key){const data=skillData[key];if(!data)return;if(panelTitle)panelTitle.textContent=key;if(panelDesc)panelDesc.textContent=data.desc;[coreBar,practiceBar,growthBar].forEach((bar,i)=>{if(bar)bar.style.setProperty('--w',data.scores[i]+'%')});[coreValue,practiceValue,growthValue].forEach((value,i)=>{if(value)value.textContent=data.scores[i]})}
+                document.querySelectorAll('.skill-node').forEach(node=>node.addEventListener('click',()=>updateSkillPanel(node.dataset.skill||node.textContent.trim())));
+                const palette=document.getElementById('command-palette'),paletteInput=document.getElementById('palette-input'),paletteList=document.getElementById('palette-list');
+                const paletteItems=[['about','Открыть: Обо мне','#about'],['projects','Открыть: Проекты','#projects'],['roadmap','Открыть: Roadmap','#roadmap'],['lab','Открыть: Лаборатория','#lab'],['skills','Открыть: Стек','#skills'],['contact','Открыть: Контакты','#contact'],['theme','Сменить тему',null],['random','Случайный проект',null]];
+                function renderPalette(filter=''){if(!paletteList)return;const f=filter.toLowerCase();paletteList.innerHTML='';paletteItems.filter(x=>x[0].includes(f)||x[1].toLowerCase().includes(f)).forEach((item,i)=>{const b=document.createElement('button');b.className='palette-item'+(i===0?' active':'');b.textContent=item[0]+'  —  '+item[1];b.onclick=()=>{if(item[2])document.querySelector(item[2])?.scrollIntoView({behavior:'smooth'});else if(item[0]==='theme')themeBtn?.click();else btnRandomFlip?.click();closePalette()};paletteList.appendChild(b)})}
+                function openPalette(){palette?.classList.add('active');renderPalette('');setTimeout(()=>paletteInput?.focus(),20)}function closePalette(){palette?.classList.remove('active');paletteInput?.blur()}paletteInput?.addEventListener('input',e=>renderPalette(e.target.value));palette?.addEventListener('click',e=>{if(e.target===palette)closePalette()});
+                document.querySelector('.terminal-input')?.setAttribute('title','/ или Ctrl/Cmd+K — Command Palette');
+                document.querySelectorAll('[data-counter]').forEach(el=>{const target=Number(el.dataset.counter);let n=0;const t=setInterval(()=>{n++;el.textContent=n;if(n>=target)clearInterval(t)},75)});
+
                 document.addEventListener('keydown', (e) => {
                     if (e.key === 'Escape') closeNodeModal();
                 });
@@ -2151,5 +2065,6 @@
             }
         })();
     </script>
+    <footer><span>MAXIM // DEV_CORE <span class="footer-accent">● ONLINE</span></span><span>Built with HTML · CSS · JavaScript · curiosity</span><span>2026 — 2027 roadmap</span></footer>
 </body>
 </html>
